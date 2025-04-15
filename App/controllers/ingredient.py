@@ -24,7 +24,7 @@ def get_user_ingredients(user_id):
     ingredients = db.session.query(Ingredient, UserInventory).filter(UserInventory.user_id == user_id).join(UserInventory, UserInventory.user_id == user_id).all()
     return ingredients
 
-def get_user_ingredient(user_id, ingredient_id):
+def get_user_ingredient(user_id):
     ingredient = db.session.query(Ingredient, UserInventory).filter(UserInventory.user_id == user_id).join(UserInventory, UserInventory.user_id == user_id).first()
     return ingredient
 
