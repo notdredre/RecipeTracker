@@ -24,16 +24,19 @@ def get_user_ingredients(user_id):
     ingredients = db.session.query(Ingredient, UserInventory).filter(UserInventory.user_id == user_id).join(UserInventory, UserInventory.user_id == user_id).all()
     return ingredients
 
-def get_user_ingredient(user_id):
-    ingredient = db.session.query(Ingredient, UserInventory).filter(UserInventory.user_id == user_id).join(UserInventory, UserInventory.user_id == user_id).first()
+def get_user_ingredient(user_id, ingredient_id):
+    ingredient = db.session.query(Ingredient, UserInventory).filter(UserInventory.user_id == user_id and Ingredient.id == ingredient_id).join(UserInventory, UserInventory.user_id == user_id).first()
     return ingredient
 
 def get_missing_ingredients(user_id, recipe_id):
     recipe_ingredients = get_recipe_ingredients(recipe_id)
     missing_ingredients = []
     for ingredient, recipe_ingredient in recipe_ingredients:
-        _, user_inventory = get_user_ingredient(user_id, ingredient.id)
-        diff = recipe_ingredient.quantity - user_inventory.quantity
-        if not user_inventory or diff > 0:
-            missing_ingredients.append((ingredient, diff))
+        if get_user_ingredient(user_id, ingredient.id):
+            _, user_inventory = get_user_ingredient(user_id, ingredient.id)
+            diff = recipe_ingredient.quantity - user_inventory.quantity
+            if diff > 0:
+                missing_ingredients.append((ingredient, diff))
+        else:
+            missing_ingredients.append((ingredient, recipe_ingredient.quantity))
     return missing_ingredients
