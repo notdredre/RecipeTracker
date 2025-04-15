@@ -14,7 +14,12 @@ class User(db.Model):
         self.set_password(password)
 
     def get_json(self):
-        return {"id": self.id, "username": self.username}
+        return {
+            "id": self.id, 
+            "username": self.username,
+            "recipes": [recipe.get_json() for recipe in self.recipes],
+            "inventory": [ingredient.get_json() for ingredient in self.inventory]
+        }
 
     def set_password(self, password):
         """Create hashed password."""

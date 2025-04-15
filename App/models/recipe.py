@@ -8,3 +8,23 @@ class Recipe(db.Model):
     steps = db.Column(db.Text, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     ingredients = db.relationship("RecipeIngredient", backref="recipe", lazy=True)
+
+
+    def __init__(self, name, description, steps, user_id):
+        self.name = name
+        self.description = description
+        self.steps = steps
+        self.user_id = user_id
+
+    def __repr__(self):
+        return f"ID: {self.id} Name: {self.name} Description: {self.description} Steps: {self.steps} User ID: {self.user_id} Ingredients: {self.ingredients}"
+    
+    def get_json(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "steps": self.steps,
+            "user_id": self.user_id,
+            "ingredients": [ingredient.get_json() for ingredient in self.ingredients]
+        }
