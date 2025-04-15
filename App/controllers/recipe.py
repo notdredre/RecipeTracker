@@ -1,4 +1,4 @@
-from App.models import Recipe, RecipeIngredient, Ingredient
+from App.models import Recipe
 from App.database import db
 
 def create_recipe(name, description, steps, user_id):
