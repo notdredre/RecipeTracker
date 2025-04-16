@@ -32,19 +32,24 @@ def update_recipe_action(recipe_id):
     data = request.form
     recipe = get_recipe(recipe_id)
     if recipe:
-        # update recipe controller
-        flash("Updated recipe successfully!")
+        if update_recipe(recipe_id, data['name'], data['description'], data['steps'], []):
+            flash("Updated recipe successfully!")
+        else:
+            flash("Could not update recipe!", "error")
+        return jsonify(recipe=get_recipe(recipe_id))
     else:
-        flash("Could not update recipe!", "error")
-    return redirect(request.referrer)
+        flash("Recipe does not exist!", "error")
+        return jsonify(error="Recipe does not exist!")
 
 @recipe_views.route('/recipes/<int:recipe_id>', methods=['DELETE'])
 @jwt_required
 def delete_recipe_action(recipe_id):
     recipe = get_recipe(recipe_id)
     if recipe:
-        # delete recipe controller
-        flash("Deleted recipe successfully")
-    else:
-        flash("Could not delete recipe!", "error")
-    return redirect(request.referrer)
+        if delete_recipe(recipe_id):
+            flash("Deleted recipe successfully")
+            return jsonify(message="Deleted recipe successfully!")
+        else:
+            flash("Could not delete recipe!", "error")
+            return jsonify(error="Could not delete recipe!")
+    return jsonify(error="Recipe does not exist!")
