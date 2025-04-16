@@ -2,9 +2,27 @@ from App.models import RecipeIngredient, UserInventory, Ingredient
 from App.database import db
 
 def create_ingredient(name):
-    new_ingredient = Ingredient(name)
-    db.session.add(new_ingredient)
-    db.session.commit()
+    exists = get_ingredient_by_name(name)
+    if not exists:
+        new_ingredient = Ingredient(name)
+        db.session.add(new_ingredient)
+        db.session.commit()
+
+def get_ingredient(ingredient_id):
+    ingredient = Ingredient.query.filter_by(ingredient_id=ingredient_id).first()
+    return ingredient
+
+def get_ingredient_by_name(name):
+    ingredient = Ingredient.query.filter_by(name=name).first()
+    return ingredient
+
+def update_ingredient(ingredient_id, name):
+    ingredient = get_ingredient(ingredient_id)
+    if ingredient:
+        ingredient.name = name
+        db.session.commit()
+        return True
+    return False
 
 def add_recipe_ingredient(recipe_id, ingredient_id, quantity):
     new_recipe_ingredient = RecipeIngredient(recipe_id, ingredient_id, quantity)
