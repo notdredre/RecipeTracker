@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Recipes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Header with Logo -->
+    <header>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+            <h1>Current Recipes</h1>
+        </div>
+        <!-- Navigation -->
+        <nav class="nav-links">
+            <a href="#">Search</a>
+            <a href="/ingredients">My Ingredients</a>
+            <a href="#">Add Recipe</a>
+        </nav>
+    </header>
