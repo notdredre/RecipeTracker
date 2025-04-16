@@ -28,3 +28,10 @@ def update_recipe(recipe_id, name, description, steps, ingredients):
         db.session.commit()
         return True
     return False
+
+def delete_recipe(recipe_id):
+    recipe = get_recipe(recipe_id)
+    if recipe:
+        db.session.delete(recipe)
+        return True
+    return False
