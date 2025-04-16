@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user as jwt_current_user
 from App.controllers.recipe import *
+from App.controllers.ingredient import get_missing_ingredients
 
 recipe_views = Blueprint('recipe_views', __name__, template_folder='../templates')
 
@@ -22,7 +23,8 @@ def add_recipe_action():
 @jwt_required
 def get_recipe_detail_page(recipe_id):
     recipe = get_recipe(recipe_id)
-    return jsonify(recipe=recipe)
+    missing_ingredients = get_missing_ingredients(jwt_current_user.id, recipe_id)
+    return jsonify(recipe=recipe, missing_ingredients=missing_ingredients)
 
 @recipe_views.route('/recipes/<int:recipe_id>', methods=['PUT'])
 @jwt_required
