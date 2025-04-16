@@ -17,3 +17,21 @@ def get_recipes_by_name(name):
 def get_user_recipes(user_id):
     recipes = Recipe.query.filter_by(user_id=user_id).all()
     return recipes
+
+def update_recipe(recipe_id, name, description, steps, ingredients):
+    recipe = get_recipe(recipe_id)
+    if recipe:
+        recipe.name = name
+        recipe.description = description
+        recipe.steps = steps
+        recipe.ingredients = ingredients
+        db.session.commit()
+        return True
+    return False
+
+def delete_recipe(recipe_id):
+    recipe = get_recipe(recipe_id)
+    if recipe:
+        db.session.delete(recipe)
+        return True
+    return False
