@@ -33,6 +33,27 @@ def get_recipe_ingredients(recipe_id):
     ingredients = db.session.query(Ingredient, RecipeIngredient).filter(RecipeIngredient.recipe_id == recipe_id).join(Ingredient, RecipeIngredient.ingredient_id == Ingredient.id).all()
     return ingredients
 
+def get_recipe_ingredient(recipe_id, ingredient_id):
+    ingredient = db.session.query(Ingredient, RecipeIngredient).filter(RecipeIngredient.recipe_id == recipe_id, RecipeIngredient.ingredient_id == ingredient_id).join(Ingredient, RecipeIngredient.ingredient_id == Ingredient.id).first()
+    return ingredient
+
+def delete_recipe_ingredient(recipe_id, ingredient_id):
+    if get_recipe_ingredient(recipe_id, ingredient_id):
+        _, recipe_ingredient = get_recipe_ingredient(recipe_id, ingredient_id)
+        db.session.delete(recipe_ingredient)
+        db.session.commit()
+        return True
+    return False
+
+def update_recipe_ingredient(recipe_id, ingredient_id, name, quantity):
+    if get_recipe_ingredient(recipe_id, ingredient_id):
+        ingredient, recipe_ingredient = get_recipe_ingredient(recipe_id, ingredient_id)
+        ingredient.name = name
+        recipe_ingredient.quantity = quantity
+        db.session.commit()
+        return True
+    return False
+
 def add_user_ingredient(user_id, ingredient_id, quantity):
     new_user_ingredient = UserInventory(user_id, ingredient_id, quantity)
     db.session.add(new_user_ingredient)
