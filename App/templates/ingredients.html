@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Ingredients</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
     <!-- Header with Logo -->
     <header>
@@ -19,8 +21,9 @@
                 <input type="text" name="search" placeholder="Search..." class="search-input">
                 <button type="submit" class="search-button">Search</button>
             </form>
-            <form action="/add" method="POST" class="add-form">
-                <input type="text" name="ingredient" placeholder="Add new ingredient..." class="add-input">
+            <form action="{{ url_for('ingredient.add_ingredient') }}" method="POST" class="add-form">
+                <input type="text" name="name" placeholder="Add new ingredient..." class="add-input">
+                <input type="number" name="quantity" placeholder="Enter quantity" class="add-input">
                 <button type="submit" class="add-button">ADD</button>
             </form>
         </div>
@@ -29,13 +32,15 @@
     <!-- Ingredients List -->
     <main>
         <div class="ingredients-list">
-            {% for ingredient in ingredients %}
-                <div class="ingredient-item">
-                    <span>{{ ingredient }}</span>
-                    <a href="{{ url_for('delete_ingredient', ingredient=ingredient) }}" class="delete-button">DELETE</a>
-                </div>
+            {% for ingredient, inventory in ingredients %}
+            <div class="ingredient-item">
+                <span>{{ ingredient.name }}</span>
+                <span>{{ inventory.quantity }}</span>
+                <a href="{{ url_for('ingredient.delete_ingredient', ingredient_id=ingredient.id) }}" class="delete-button">DELETE</a>
+            </div>
             {% endfor %}
         </div>
     </main>
 </body>
+
 </html>
