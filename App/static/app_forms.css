@@ -1,0 +1,101 @@
+/* Form Styles */
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.8rem;
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.9rem;
+    background-color: white;
+    border: 1px solid #ddd;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Ingredients Section */
+.ingredients-container {
+    margin-bottom: 1.5rem;
+}
+
+.ingredient-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
+}
+
+.ingredient-name {
+    flex: 2;
+}
+
+.ingredient-qty {
+    flex: 1;
+}
+
+.ingredient-unit {
+    flex: 1;
+}
+
+.ingredient-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.add-ingredient-btn {
+    background-color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.remove-ingredient {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 1.3rem;
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.remove-ingredient:hover {
+    background-color: rgba(255, 99, 71, 0.1);
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2.5rem;
+}
+
+.cancel-btn {
+    background-color: #757575;
+}
