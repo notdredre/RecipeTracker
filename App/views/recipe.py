@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user as jwt_current_user
 from App.controllers.recipe import *
-from App.controllers.ingredient import get_missing_ingredients
+from App.controllers.ingredient import get_missing_ingredients, add_recipe_ingredient, create_ingredient
 
 recipe_views = Blueprint('recipe_views', __name__, template_folder='../templates')
 
@@ -9,7 +9,15 @@ recipe_views = Blueprint('recipe_views', __name__, template_folder='../templates
 @jwt_required()
 def add_recipe_action():
     data = request.form
-    create_recipe(data['name'], data['description'], data['steps'], data['category'], jwt_current_user.id)
+    ingredients = []
+    for field in data:
+        if "ingredient_names" in field:
+            num = field[len("ingredient_names"):]
+            ingredients.append((data[f"ingredient_names{num}"], data[f"ingredient_quantities{num}"]))
+    new_recipe = create_recipe(data['name'], data['description'], data['steps'], data['category'], jwt_current_user.id)
+    for name, quantity in ingredients:
+        new_ingredient = create_ingredient(name)
+        add_recipe_ingredient(new_recipe.id, new_ingredient.id, quantity)
     flash("Recipe created successfully!")
     return jsonify(data=data)
 
@@ -20,7 +28,7 @@ def get_recipe_detail_page(recipe_id):
     missing_ingredients = get_missing_ingredients(jwt_current_user.id, recipe_id)
     return jsonify(recipe=recipe.get_json(), missing_ingredients=[(ingredient.get_json(), quantity) for ingredient, quantity in missing_ingredients])
 
-@recipe_views.route('/recipes/<int:recipe_id>', methods=['PUT'])
+@recipe_views.route('/recipes/<int:recipe_id>/edit', methods=['POST']) #Change this
 @jwt_required()
 def update_recipe_action(recipe_id):
     data = request.form
@@ -35,15 +43,29 @@ def update_recipe_action(recipe_id):
         flash("Recipe does not exist!", "error")
         return jsonify(error="Recipe does not exist!")
 
-@recipe_views.route('/recipes/<int:recipe_id>', methods=['DELETE'])
+@recipe_views.route('/recipes/<int:recipe_id>/delete', methods=['POST'])
 @jwt_required()
 def delete_recipe_action(recipe_id):
     recipe = get_recipe(recipe_id)
     if recipe:
         if delete_recipe(recipe_id):
             flash("Deleted recipe successfully")
-            return jsonify(message="Deleted recipe successfully!")
         else:
             flash("Could not delete recipe!", "error")
-            return jsonify(error="Could not delete recipe!")
-    return jsonify(error="Recipe does not exist!")
+    else:
+        flash("Recipe does not exist!", "error")
+    return redirect(url_for('index_views.home_page'))
+
+
+@recipe_views.route('/recipes/<int:recipe_id>/cook', methods=['POST'])
+@jwt_required()
+def cook_recipe_action(recipe_id):
+    recipe = get_recipe(recipe_id)
+    if recipe:
+        if cook_recipe(recipe_id, jwt_current_user.id):
+            flash('Recipe cooked successfully! Ingredients have been deducted from your inventory.')
+        else:
+            flash('Cannot cook recipe - insufficient ingredients!', 'error')
+    else:
+        flash('Recipe not found!', 'error')
+    return redirect(url_for('index_views.home_page'))
