@@ -75,4 +75,4 @@ def delete_ingredient(ingredient_id):
     )
     if not deleted:
         return jsonify({"error": "Ingredient not found"}), 404
-    return jsonify({"message": "Ingredient deleted successfully"})
+    return redirect(request.referrer)
