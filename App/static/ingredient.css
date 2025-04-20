@@ -1,0 +1,87 @@
+/* Shared styles from ingredients.css */
+/* Add these new styles for recipes.html */
+
+/* Navigation */
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.nav-links a {
+    color: #5C4033; /* Dark brown */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    color: #FF6347; /* Tomato red */
+}
+
+/* Recipe Grid */
+.search-container {
+    margin: 2rem;
+    text-align: center;
+}
+
+.search-container .search-input {
+    width: 60%;
+    padding: 0.8rem;
+    border: 2px solid #FF6347;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem;
+}
+
+.recipe-card {
+    background-color: #F5F5DC; /* Light beige */
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+}
+
+.recipe-card h3 {
+    margin: 0 0 0.5rem 0;
+    color: #5C4033;
+}
+
+.category {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: white;
+}
+
+/* Category-specific colors */
+.category.lunch {
+    background-color: #2E8B57; /* Dark green */
+}
+
+.category.dessert {
+    background-color: #A0522D; /* Sienna */
+}
+
+.category.dinner {
+    background-color: #0F4C81; /* Navy blue */
+}
+
+.category.drink {
+    background-color: #6A5ACD; /* Slate blue */
+}
+
+.category.breakfast {
+    background-color: #E1AD01; /* Mustard yellow */
+}
