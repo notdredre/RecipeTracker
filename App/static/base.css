@@ -1,0 +1,100 @@
+/* ===== GLOBAL STYLES ===== */
+:root {
+    /* Color Palette */
+    --primary: #FFA07A;     /* Soft orange */
+    --secondary: #FFFDD0;   /* Cream */
+    --accent: #FF6347;      /* Tomato red */
+    --text-dark: #5C4033;   /* Dark brown */
+    --text-light: #F5F5DC;  /* Light beige */
+    --category-lunch: #2E8B57;
+    --category-dessert: #A0522D;
+    --category-dinner: #0F4C81;
+    --category-drink: #6A5ACD;
+    --category-breakfast: #E1AD01;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--secondary);
+    color: var(--text-dark);
+}
+
+/* ===== HEADER & NAVIGATION ===== */
+header {
+    background-color: var(--primary);
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    height: 50px;
+    width: auto;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.nav-links a {
+    color: var(--text-dark);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    color: var(--accent);
+}
+
+/* ===== FORM ELEMENTS ===== */
+input, button {
+    padding: 0.5rem;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+button {
+    background-color: var(--accent);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.search-input, .add-input {
+    flex: 1;
+    border-radius: 4px 0 0 4px;
+}
+
+.search-button, .add-button {
+    border-radius: 0 4px 4px 0;
+}
+
+/* ===== UTILITY CLASSES ===== */
+.category {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: white;
+}
