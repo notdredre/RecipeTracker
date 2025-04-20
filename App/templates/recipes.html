@@ -154,7 +154,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="add-ingredient-btn" onclick="addIngredientField()">
+                    <button type="button" class="add-ingredient-btn" onclick="addIngredientField('ingredients-container')">
                         <span>+</span> Add Another Ingredient
                     </button>
                 </div>
@@ -173,9 +173,11 @@
     </div>
 
    
-
-    
     <script>
+        // Global variables
+        let ingredientCounter = 1;
+        
+        // Modal functions
         function showModal(id) {
             document.getElementById(id).style.display = 'block';
             document.body.style.overflow = 'hidden';
@@ -192,80 +194,68 @@
                 hideModal(event.target.id);
             }
         }
-        let ingredientCounter = 1; // Start at 1 because the default row is index 0
-
-        function initIngredientCounter() {
-            const rows = document.querySelectorAll('#ingredients-container .ingredient-row');
-            if (rows.length > 0) {
-                // Find the highest existing index
-                const maxIndex = Math.max(...Array.from(rows).map(row => {
-                    return parseInt(row.dataset.index) || 0;
-                }));
-                ingredientCounter = maxIndex + 1; // Set counter to next available ID
-            }
-                }
-
-
-
-                function addIngredientField(containerId = 'ingredients-container') {
-                    const container = document.getElementById(containerId);
-                    const newRow = document.createElement('div');
-                    newRow.className = 'ingredient-row';
-                    newRow.dataset.index = ingredientCounter++;
-                    
-                    newRow.innerHTML = `
-                        <input type="text" class="ingredient-name" name="ingredient_names${newRow.dataset.index}" placeholder="Ingredient" required>
-                        <input type="number" step="0.01" min="0" class="ingredient-qty" name="ingredient_quantities${newRow.dataset.index}" placeholder="Quantity" required>
-                        <button type="button" class="remove-ingredient" onclick="removeIngredientField(this)">✕</button>
-                    `;
-                    
-                    container.appendChild(newRow);
-                }
-
+    
+        // Initialize ingredient counter for a specific container
+        function initIngredientCounter(containerId = 'ingredients-container') {
+            const container = document.getElementById(containerId);
+            const rows = container.querySelectorAll('.ingredient-row');
+            let maxIndex = 0;
+    
+            rows.forEach(row => {
+                const index = parseInt(row.dataset.index) || 0;
+                if (index > maxIndex) maxIndex = index;
+            });
+    
+            ingredientCounter = maxIndex + 1;
+            return ingredientCounter;
+        }
+    
+        // Add ingredient field to specified container
+        function addIngredientField(containerId = 'ingredients-container') {
+            const container = document.getElementById(containerId);
+            const newRow = document.createElement('div');
+            newRow.className = 'ingredient-row';
+            newRow.dataset.index = ingredientCounter++;
+            
+            newRow.innerHTML = `
+                <input type="text" class="ingredient-name" name="ingredient_names${newRow.dataset.index}" placeholder="Ingredient" required>
+                <input type="number" step="0.01" min="0" class="ingredient-qty" name="ingredient_quantities${newRow.dataset.index}" placeholder="Quantity" required>
+                <button type="button" class="remove-ingredient" onclick="removeIngredientField(this)">✕</button>
+            `;
+            
+            container.appendChild(newRow);
+        }
+    
+        // Remove ingredient field (works for both add/edit modals)
         function removeIngredientField(button) {
             const row = button.closest('.ingredient-row');
-            const container = document.getElementById('ingredients-container');
+            const container = row.parentElement;
             const rows = container.querySelectorAll('.ingredient-row');
             
             if (rows.length > 1) {
-                row.remove(); // Only allow removal if not the last row
+                row.remove();
             } else {
-                // Reset fields (don't remove the last row)
-                const inputs = row.querySelectorAll('input, select');
+                // Reset fields but keep row
+                const inputs = row.querySelectorAll('input[type="text"], input[type="number"]');
                 inputs.forEach(input => {
-                    if (input.type !== 'button') input.value = '';
+                    input.value = '';
                 });
             }
         }
-
+    
         // When showing add modal
         function showAddModal() {
             showModal('add-recipe-modal');
-            initIngredientCounter(); // Reset counter
+            initIngredientCounter(); // Initialize counter for add modal
         }
-
+    
         // When showing edit modal
         function showEditModal(recipeId) {
             showModal('edit-recipe-modal-' + recipeId);
-            initIngredientCounter(); // Initialize based on existing ingredients
+            initIngredientCounter('edit-ingredients-' + recipeId); // Initialize counter for edit modal
         }
-
-        function removeIngredientField(button) {
-            const container = document.getElementById('ingredients-container');
-            const rows = container.querySelectorAll('.ingredient-row');
-            
-            if (rows.length > 1) {
-                button.closest('.ingredient-row').remove();
-            } else {
-                // Reset the fields if it's the last row
-                const row = rows[0];
-                row.querySelector('.ingredient-name').value = '';
-                row.querySelector('.ingredient-qty').value = '';
-                row.querySelector('.ingredient-unit').value = 'piece';
-            }
-        }
-        
-       
     </script>
+    
+    
 </body>
 </html>
