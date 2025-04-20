@@ -7,6 +7,8 @@ def create_ingredient(name):
         new_ingredient = Ingredient(name)
         db.session.add(new_ingredient)
         db.session.commit()
+        return new_ingredient
+    return None
 
 def get_ingredient(ingredient_id):
     ingredient = Ingredient.query.filter_by(ingredient_id=ingredient_id).first()
