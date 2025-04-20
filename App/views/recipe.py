@@ -35,18 +35,18 @@ def update_recipe_action(recipe_id):
         flash("Recipe does not exist!", "error")
         return jsonify(error="Recipe does not exist!")
 
-@recipe_views.route('/recipes/<int:recipe_id>', methods=['DELETE']) #Change because HTML can't use DELETE methods
+@recipe_views.route('/recipes/<int:recipe_id>/delete', methods=['POST'])
 @jwt_required()
 def delete_recipe_action(recipe_id):
     recipe = get_recipe(recipe_id)
     if recipe:
         if delete_recipe(recipe_id):
             flash("Deleted recipe successfully")
-            return jsonify(message="Deleted recipe successfully!")
         else:
             flash("Could not delete recipe!", "error")
-            return jsonify(error="Could not delete recipe!")
-    return jsonify(error="Recipe does not exist!")
+    else:
+        flash("Recipe does not exist!", "error")
+    return redirect(url_for('index_views.home_page'))
 
 
 @recipe_views.route('/recipes/<int:recipe_id>/cook', methods=['POST'])

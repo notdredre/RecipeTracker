@@ -40,6 +40,7 @@ def delete_recipe(recipe_id):
     recipe = get_recipe(recipe_id)
     if recipe:
         db.session.delete(recipe)
+        db.session.commit()
         return True
     return False
 
