@@ -11,9 +11,6 @@
 <body>
     <div class="container">
         <div class="content">
-            <div class="create">
-                <a href="{{ url_for('auth_views.login_page') }}">LOGIN</a>
-            </div>
             <div class="form-box signup">
                 <form action='/signup' method="post">
                     <h2>SIGN UP</h2>
@@ -35,6 +32,9 @@
                         </div>
                     </div>
                     <div class="user-submit">
+                        <div class="create">
+                            <a href="{{ url_for('auth_views.login_page') }}">LOGIN instead</a>
+                        </div>
                         <button class="btn">Sign Up</button>
                     </div>
                 </form>
@@ -51,7 +51,7 @@
         <div class="logreg-box"></div>
     </div>
 
-    <!-- Password validation script -->
+   
     <script>
         const form = document.querySelector('form');
         form.addEventListener('submit', function(e) {
@@ -59,7 +59,7 @@
             const confirmPassword = document.querySelector('input[name="confirm_password"]').value;
 
             if (password !== confirmPassword) {
-                e.preventDefault();  // Prevent form submission
+                e.preventDefault();  
                 alert("Passwords do not match. Please try again.");
             }
         });
