@@ -7,10 +7,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='loginStyle.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
 </head>
 <body>
     <div class="container">
         <div class="content">
+            <div class="create">
+                <a href="{{ url_for('auth_views.login_page') }}">LOGIN</a>
+            </div>
             <div class="form-box signup">
                 <form action='/signup' method="post">
                     <h2>SIGN UP</h2>
@@ -49,3 +53,4 @@
     </div>
 </body>
 </html>
+
