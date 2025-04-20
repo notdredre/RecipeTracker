@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Current Recipes</title>
+    <title>My Recipes</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/base.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/recipes.css') }}">
 </head>
@@ -12,13 +12,14 @@
     <header>
         <div class="logo-container">
             <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
-            <h1>Current Recipes</h1>
+            <h1>My Recipes</h1>
         </div>
         <!-- Navigation -->
         <nav class="nav-links">
-            <a href="{{ url_for('recipe_views.get_recipes_page') }}">Search</a>
-            <a href="{{ url_for('ingredient_views.get_ingredients_page') }}">My Ingredients</a>
-            <a href="{{ url_for('recipe_views.get_add_recipe_page') }}">Add Recipe</a>
+            <a href="{{ url_for('index_views.home_page') }}">Home</a>
+            <a href="">My Ingredients</a>
+            <a href="{{ url_for('static', filename='templates/add_recipes') }}">Add Recipe</a>
+            <a href="{{ url_for('user_views.logout_action') }}">Logout</a>
         </nav>
     </header>
 
@@ -41,31 +42,28 @@
             {% for recipe in recipes %}
                 <div class="recipe-card">
                     <h3>{{ recipe.name }}</h3>
-                    <span class="category">{{ recipe.category }}</span>
+                    <span class="category {{ recipe.category.lower() if recipe.category else 'other' }}">
+                        {{ recipe.category or 'Uncategorized' }}
+                    </span>
                     
-                    <div class="recipe-details">
+                    {% if recipe.description %}
+                    <div class="recipe-description">
                         <p>{{ recipe.description }}</p>
-                        
-                        <h4>Steps:</h4>
-                        <ol>
-                            {% for step in recipe.steps.split('\n') %}
-                                {% if step.strip() %}
-                                    <li>{{ step }}</li>
-                                {% endif %}
-                            {% endfor %}
-                        </ol>
                     </div>
+                    {% endif %}
                     
                     <div class="recipe-actions">
+                        <a href="{{ url_for('recipe_views.get_recipe_detail_page', recipe_id=recipe.id) }}" 
+                           class="view-btn">View</a>
                         <a href="{{ url_for('recipe_views.get_edit_recipe_page', recipe_id=recipe.id) }}" 
                            class="edit-btn">Edit</a>
                         <form method="POST" action="{{ url_for('recipe_views.delete_recipe_action', recipe_id=recipe.id) }}" 
-                              style="display: inline;">
+                              class="delete-form">
                             <button type="submit" class="delete-btn" 
                                     onclick="return confirm('Are you sure you want to delete this recipe?')">Delete</button>
                         </form>
                         <form method="POST" action="{{ url_for('recipe_views.cook_recipe_action', recipe_id=recipe.id) }}" 
-                              style="display: inline;">
+                              class="cook-form">
                             <button type="submit" class="cook-btn">Cook</button>
                         </form>
                     </div>
