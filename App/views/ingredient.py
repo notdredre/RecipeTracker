@@ -65,7 +65,7 @@ def update_ingredient(ingredient_id):
     return jsonify({"message": "Ingredient updated successfully"})
 
 
-@ingredient_bp.route("/<int:ingredient_id>", methods=["DELETE"])
+@ingredient_bp.route("delete/<int:ingredient_id>", methods=["GET"])
 @jwt_required()
 def delete_ingredient(ingredient_id):
     user_id = get_jwt_identity()
