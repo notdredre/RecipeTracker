@@ -1,41 +1,99 @@
-/* ===== RECIPES-SPECIFIC STYLES ===== */
-.search-container {
-    margin: 2rem;
-    text-align: center;
-}
-
-.search-container .search-input {
-    width: 60%;
-    padding: 0.8rem;
-    border: 2px solid var(--accent);
-}
-
-.recipe-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin: 2rem;
-}
-
-.recipe-card {
+/* Recipe Form Styles */
+.recipe-form-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
     background-color: var(--text-light);
-    padding: 1.5rem;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.recipe-card:hover {
-    transform: translateY(-5px);
+.recipe-form-container h2 {
+    color: var(--accent);
+    margin-bottom: 1.5rem;
 }
 
-.recipe-card h3 {
-    margin: 0 0 0.5rem 0;
+.form-group {
+    margin-bottom: 1.5rem;
 }
 
-/* Category colors */
-.category.lunch { background-color: var(--category-lunch); }
-.category.dessert { background-color: var(--category-dessert); }
-.category.dinner { background-color: var(--category-dinner); }
-.category.drink { background-color: var(--category-drink); }
-.category.breakfast { background-color: var(--category-breakfast); }
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+}
+
+.ingredients-container {
+    border: 1px solid var(--accent);
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.ingredient-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    align-items: center;
+}
+
+.ingredient-row select {
+    flex: 2;
+}
+
+.ingredient-row input {
+    flex: 1;
+}
+
+.ingredient-row select:last-child {
+    flex: 1;
+}
+
+.submit-btn, .cancel-btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submit-btn {
+    background-color: var(--accent);
+    color: white;
+}
+
+.cancel-btn {
+    background-color: #ccc;
+    color: #333;
+    margin-left: 1rem;
+    text-decoration: none;
+}
+
+/* Recipe Details in Cards */
+.recipe-details {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: rgba(255,255,255,0.7);
+    border-radius: 4px;
+}
+
+.recipe-details h4 {
+    margin: 1rem 0 0.5rem 0;
+    color: var(--accent);
+}
+
+.recipe-details ol, .recipe-details ul {
+    padding-left: 1.5rem;
+}
+
+.recipe-details li {
+    margin-bottom: 0.3rem;
+}
