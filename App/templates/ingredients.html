@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Ingredients</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Header with Logo -->
+    <header>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+            <h1>My Ingredients</h1>
+        </div>
+        <!-- Search and Add Section -->
+        <div class="search-add-container">
+            <form action="/" method="GET" class="search-form">
+                <input type="text" name="search" placeholder="Search..." class="search-input">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+            <form action="/add" method="POST" class="add-form">
+                <input type="text" name="ingredient" placeholder="Add new ingredient..." class="add-input">
+                <button type="submit" class="add-button">ADD</button>
+            </form>
+        </div>
+    </header>
+
+    <!-- Ingredients List -->
+    <main>
+        <div class="ingredients-list">
+            {% for ingredient in ingredients %}
+                <div class="ingredient-item">
+                    <span>{{ ingredient }}</span>
+                    <a href="{{ url_for('delete_ingredient', ingredient=ingredient) }}" class="delete-button">DELETE</a>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>
