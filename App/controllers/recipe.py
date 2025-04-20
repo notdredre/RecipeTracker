@@ -5,6 +5,7 @@ def create_recipe(name, description, steps, category, user_id):
     new_recipe = Recipe(name, description, steps, category, user_id)
     db.session.add(new_recipe)
     db.session.commit()
+    return new_recipe
 
 def get_recipe(recipe_id):
     recipe = Recipe.query.filter_by(id=recipe_id).first()
