@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='loginStyle.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-
 </head>
 <body>
     <div class="container">
@@ -51,6 +50,19 @@
         </div>
         <div class="logreg-box"></div>
     </div>
+
+    <!-- Password validation script -->
+    <script>
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(e) {
+            const password = document.querySelector('input[name="password"]').value;
+            const confirmPassword = document.querySelector('input[name="confirm_password"]').value;
+
+            if (password !== confirmPassword) {
+                e.preventDefault();  // Prevent form submission
+                alert("Passwords do not match. Please try again.");
+            }
+        });
+    </script>
 </body>
 </html>
-
