@@ -9,7 +9,7 @@ recipe_views = Blueprint('recipe_views', __name__, template_folder='../templates
 @jwt_required()
 def get_recipes_page():
     recipes = get_user_recipes(jwt_current_user.id)
-    return jsonify(recipes=[recipe.get_json() for recipe in recipes])
+    return render_template("recipes.html", recipes=recipes)
 
 @recipe_views.route('/recipes', methods=['POST'])
 @jwt_required()
