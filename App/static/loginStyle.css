@@ -68,7 +68,7 @@ body {
 
 .navbar a:hover,
 .navbar a.active {
-  color: #02bdd6;
+  color: orange;
 }
 
 .container {
@@ -78,7 +78,7 @@ body {
   transform: translate(-50%, -50%);
   width: 100%;
   height: 785px;
-  background: #02bdd6;
+  background: orange;
   background-size: cover;
   background-position: center;
   border-radius: 10px;
