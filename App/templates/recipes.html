@@ -96,19 +96,9 @@
                 <div class="form-group">
                     <label>Ingredients</label>
                     <div class="ingredients-container" id="ingredients-container">
-                        <div class="ingredient-row">
-                            <input type="text" class="ingredient-name" name="ingredient_names[]" placeholder="Ingredient" required>
-                            <input type="number" step="0.01" min="0" class="ingredient-qty" name="ingredient_quantities[]" placeholder="Quantity" required>
-                            <select class="ingredient-unit" name="ingredient_units[]" required>
-                                <option value="g">g</option>
-                                <option value="kg">kg</option>
-                                <option value="ml">ml</option>
-                                <option value="L">L</option>
-                                <option value="tsp">tsp</option>
-                                <option value="tbsp">tbsp</option>
-                                <option value="cup">cup</option>
-                                <option value="piece" selected>piece</option>
-                            </select>
+                        <div class="ingredient-row" data-index="0">  <!-- Start counter at 0 -->
+                            <input type="text" class="ingredient-name" name="ingredient_names0" placeholder="Ingredient" required>
+                            <input type="number" step="0.01" min="0" class="ingredient-qty" name="ingredient_quantities0" placeholder="Quantity" required>
                             <div class="ingredient-actions">
                                 <button type="button" class="remove-ingredient" onclick="removeIngredientField(this)">✕</button>
                             </div>
@@ -132,8 +122,65 @@
         </div>
     </div>
 
-    <!-- Edit Recipe Modals would be similar but with populated values -->
+    <!-- Edit Recipe Modal-->
+    <div id="add-recipe-modal" class="modal">
+        <div class="modal-content">
+            <h2>Add New Recipe</h2>
+            <form method="POST" action="/recipes" id="recipe-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Recipe Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" name="category" required>
+                            <option value="">Select Category</option>
+                            <option value="Breakfast">Breakfast</option>
+                            <option value="Lunch">Lunch</option>
+                            <option value="Dinner">Dinner</option>
+                            <option value="Dessert">Dessert</option>
+                            <option value="Drink">Drink</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Ingredients</label>
+                    <div class="ingredients-container" id="ingredients-container">
+                        <div class="ingredient-row">
+                            <input type="text" class="ingredient-name" name="ingredient_names[]" placeholder="Ingredient" required>
+                            <input type="number" step="0.01" min="0" class="ingredient-qty" name="ingredient_quantities" placeholder="Quantity" required>
+                            <div class="ingredient-actions">
+                                <button type="button" class="remove-ingredient" onclick="removeIngredientField(this)">✕</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="add-ingredient-btn" onclick="addIngredientField()">
+                        <span>+</span> Add Another Ingredient
+                    </button>
+                </div>
+                
+                <div class="form-group">
+                    <label for="steps">Cooking Steps</label>
+                    <textarea id="steps" name="steps" rows="5" required placeholder="Enter each step on a new line"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">Save Recipe</button>
+                    <button type="button" class="cancel-btn" onclick="hideModal('add-recipe-modal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
+    
     <script>
         function showModal(id) {
             document.getElementById(id).style.display = 'block';
@@ -151,29 +198,63 @@
                 hideModal(event.target.id);
             }
         }
+        let ingredientCounter = 1; // Start at 1 because the default row is index 0
+
+        function initIngredientCounter() {
+            const rows = document.querySelectorAll('#ingredients-container .ingredient-row');
+            if (rows.length > 0) {
+                // Find the highest existing index
+                const maxIndex = Math.max(...Array.from(rows).map(row => {
+                    return parseInt(row.dataset.index) || 0;
+                }));
+                ingredientCounter = maxIndex + 1; // Set counter to next available ID
+            }
+                }
+
+        // Call this when the modal opens
+        document.getElementById('add-recipe-modal').addEventListener('show', initIngredientCounter);
 
         function addIngredientField() {
             const container = document.getElementById('ingredients-container');
             const newRow = document.createElement('div');
             newRow.className = 'ingredient-row';
+            newRow.dataset.index = ingredientCounter; // Assign unique ID
+            
             newRow.innerHTML = `
-                <input type="text" class="ingredient-name" name="ingredient_names[]" placeholder="Ingredient" required>
-                <input type="number" step="0.01" min="0" class="ingredient-qty" name="ingredient_quantities[]" placeholder="Quantity" required>
-                <select class="ingredient-unit" name="ingredient_units[]" required>
-                    <option value="g">g</option>
-                    <option value="kg">kg</option>
-                    <option value="ml">ml</option>
-                    <option value="L">L</option>
-                    <option value="tsp">tsp</option>
-                    <option value="tbsp">tbsp</option>
-                    <option value="cup">cup</option>
-                    <option value="piece" selected>piece</option>
-                </select>
-                <div class="ingredient-actions">
-                    <button type="button" class="remove-ingredient" onclick="removeIngredientField(this)">✕</button>
-                </div>
+                <input type="text" class="ingredient-name" name="ingredient_names${ingredientCounter}" placeholder="Ingredient" required>
+                <input type="number" step="0.01" min="0" class="ingredient-qty" name="ingredient_quantities${ingredientCounter}" placeholder="Quantity" required>
+                <button type="button" class="remove-ingredient" onclick="removeIngredientField(this)">✕</button>
             `;
+            
             container.appendChild(newRow);
+            ingredientCounter++; // Increment for next ingredient
+        }
+        function removeIngredientField(button) {
+            const row = button.closest('.ingredient-row');
+            const container = document.getElementById('ingredients-container');
+            const rows = container.querySelectorAll('.ingredient-row');
+            
+            if (rows.length > 1) {
+                row.remove(); // Only allow removal if not the last row
+            } else {
+                // Reset fields (don't remove the last row)
+                const inputs = row.querySelectorAll('input, select');
+                inputs.forEach(input => {
+                    if (input.type !== 'button') input.value = '';
+                });
+            }
+        }
+
+        // When showing add modal
+        function showAddModal() {
+            showModal('add-recipe-modal');
+            initIngredientCounter(); // Reset counter
+        }
+
+        // When showing edit modal
+        function showEditModal(recipeId) {
+            showModal('edit-recipe-modal-' + recipeId);
+            initIngredientCounter(); // Initialize based on existing ingredients
         }
 
         function removeIngredientField(button) {
