@@ -1,0 +1,245 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: black;
+}
+
+.header {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 25px 12.5%;
+  background: #dee1e5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.right-side img {
+  max-width: 160px;
+  max-height: 50px;
+}
+
+.right-side {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.right-side li {
+  margin-right: 15px; /* Adjust as needed for spacing between items */
+}
+
+.left-side {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.left-side li {
+  margin-right: auto; /* Push the "Logout" link to the left */
+}
+
+.navbar a {
+  position: relative;
+  font-size: 16px;
+  color: black;
+  text-decoration: none;
+  font-weight: 500;
+  margin-right: 30px;
+  transition: 0.3s;
+}
+
+.navbar a:hover,
+.navbar a.active {
+  color: #02bdd6;
+}
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 785px;
+  background: #02bdd6;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+}
+
+.container .content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 58%;
+  height: 100%;
+  background: white;
+  padding: 80px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  color: #000000;
+}
+
+.content h2 {
+  font-size: 40px;
+}
+
+.text-sci h2 {
+  font-size: 40px;
+}
+
+.text-sci h2 span {
+  font-size: 25px;
+}
+.text-sci p {
+  font-size: 16px;
+  margin: 20px 0;
+}
+
+.container .logreg-box {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: calc(100% - 58%);
+  height: 100%;
+  background: transparent;
+}
+
+.logreg-box .form-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  color: #151515;
+}
+
+.user-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.user-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form-box h2 {
+  font-size: 32px;
+  text-align: center;
+}
+
+.form-box .input-box {
+  position: relative;
+  width: 340px;
+  height: 50px;
+  border-bottom: 2px solid black;
+  margin: 30px 0;
+}
+
+.input-box input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #151515;
+  font-weight: 500;
+  padding-right: 28px;
+}
+
+.input-box label {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY (-50%);
+  font-size: 16px;
+  font-weight: 500;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+  top: -5px;
+}
+
+.input-box .icon {
+  position: absolute;
+  top: 13px;
+  right: 0;
+  font-size: 19px;
+}
+
+.remember-forgot {
+  width: 350px;
+  font-size: 14.5px;
+  font-weight: 500;
+  margin: -15px 0 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.remember-forgot label input {
+  accent-color: #151515;
+  margin-right: 3px;
+}
+
+.remember-forgot a {
+  color: #151515;
+  text-decoration: none;
+}
+
+.remember-forgot a:hover {
+  text-decoration: underline;
+}
+
+.btn {
+  width: 50%;
+  height: 45px;
+  background: #286dbf;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #e4e4e4;
+  font-weight: 500;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+
+.flash-messages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
