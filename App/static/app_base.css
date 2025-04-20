@@ -1,0 +1,77 @@
+/* ===== GLOBAL STYLES ===== */
+:root {
+    /* Color Palette */
+    --primary: #FFA07A;     /* Soft orange */
+    --secondary: #FFFDD0;   /* Cream */
+    --accent: #FF6347;      /* Tomato red */
+    --text-dark: #5C4033;   /* Dark brown */
+    --text-light: #F5F5DC;  /* Light beige */
+    --category-lunch: #2E8B57;
+    --category-dessert: #A0522D;
+    --category-dinner: #0F4C81;
+    --category-drink: #6A5ACD;
+    --category-breakfast: #E1AD01;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--secondary);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+}
+
+/* Flash Messages */
+.flash {
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.flash.success {
+    background-color: #DFF0D8;
+    color: #3C763D;
+    border: 1px solid #D6E9C6;
+}
+
+.flash.error {
+    background-color: #F2DEDE;
+    color: #A94442;
+    border: 1px solid #EBCCD1;
+}
+
+/* Basic Elements */
+input, button, textarea, select {
+    padding: 0.8rem;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 99, 71, 0.3);
+}
+
+button {
+    background-color: var(--accent);
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    padding: 0.8rem 1.5rem;
+}
+
+button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
