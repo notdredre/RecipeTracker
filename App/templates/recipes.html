@@ -61,6 +61,56 @@
                 </form>
             </div>
         </div>
+
+        <!-- Edit Modal -->
+        <div id="edit-recipe-modal-{{ recipe.id }}" class="modal">
+            <div class="modal-content">
+                <h2>Edit {{ recipe.name }}</h2>
+                <form method="POST" action="/recipes/{{ recipe.id }}" id="edit-form-{{ recipe.id }}">
+                    <input type="hidden" name="_method" value="PUT">
+                    
+                    <!-- Name and Category -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Recipe Name</label>
+                            <input type="text" name="name" value="{{ recipe.name }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select name="category" required>
+                                <option value="">Select Category</option>
+                                {% for cat in ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Drink'] %}
+                                <option value="{{ cat }}" {% if recipe.category == cat %}selected{% endif %}>{{ cat }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Ingredients (Dynamic fields) -->
+                    <div class="form-group">
+                        <label>Ingredients</label>
+                        <div class="ingredients-container" id="edit-ingredients-{{ recipe.id }}">
+                            {% for ingredient in recipe.ingredients %}
+                            <div class="ingredient-row">
+                                <input type="text" name="ingredient_names[]" value="{{ ingredient.name }}" required>
+                                <input type="number" step="0.01" name="ingredient_quantities[]" value="{{ ingredient.quantity }}" required>
+                                <button type="button" onclick="removeIngredientField(this)">✕</button>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button type="button" onclick="addIngredientField('edit-ingredients-{{ recipe.id }}')">
+                            + Add Ingredient
+                        </button>
+                    </div>
+                    
+                    <!-- Submit/Cancel Buttons -->
+                    <div class="form-actions">
+                        <button type="submit">Update</button>
+                        <button type="button" onclick="hideModal('edit-recipe-modal-{{ recipe.id }}')">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
         {% endfor %}
     </div>
 
@@ -218,7 +268,7 @@
             const container = document.getElementById('ingredients-container');
             const newRow = document.createElement('div');
             newRow.className = 'ingredient-row';
-            newRow.dataset.index = ingredientCounter; // Assign unique ID
+            newRow.dataset.index = ingredientCounter; // Assign unique ID within this recipe
             
             newRow.innerHTML = `
                 <input type="text" class="ingredient-name" name="ingredient_names${ingredientCounter}" placeholder="Ingredient" required>
@@ -271,6 +321,36 @@
                 row.querySelector('.ingredient-unit').value = 'piece';
             }
         }
+        
+        // Form submission handler
+        document.querySelectorAll('[id^="edit-form-"]').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                
+                fetch(this.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-HTTP-Method-Override': 'PUT',
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        alert("Recipe updated successfully!");
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("Failed to update recipe");
+                });
+            });
+        });
     </script>
 </body>
 </html>
