@@ -3,38 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Current Recipes</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>My Recipes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/recipes.css') }}">
 </head>
 <body>
-    <!-- Header with Logo -->
+    <!-- Header -->
     <header>
         <div class="logo-container">
-            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
-            <h1>Current Recipes</h1>
+            <img src="/static/logo.png" alt="Logo" class="logo">
+            <h1>My Recipe App</h1>
         </div>
-        <!-- Navigation -->
-        <nav class="nav-links">
-            <a href="#">Search</a>
+        <nav>
+            <a href="/home">Home</a>
             <a href="/ingredients">My Ingredients</a>
-            <a href="#">Add Recipe</a>
+            <a href="#" onclick="showModal('add-recipe-modal')">Add Recipe</a>
+            <a href="/logout">Logout</a>
         </nav>
     </header>
-        <!-- Recipe Grid -->
-        <main>
-            <div class="search-container">
-                <input type="text" placeholder="Search recipes..." class="search-input">
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <form method="GET" action="/home">
+            <input type="text" name="search" placeholder="Search recipes..." class="search-input"
+                   value="{{ request.args.get('search', '') }}">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- Recipe Grid -->
+    <div class="recipe-grid">
+        {% for recipe in recipes %}
+        <div class="recipe-card">
+            <h3>{{ recipe.name }}</h3>
+            <p>{{ recipe.description[:100] }}{% if recipe.description|length > 100 %}...{% endif %}</p>
+            <div class="recipe-actions">
+                <a href="/recipes/{{ recipe.id }}" class="view-btn">View</a>
+                <a href="#" onclick="showModal('edit-recipe-modal-{{ recipe.id }}')" class="edit-btn">Edit</a>
+                <form method="POST" action="/recipes/{{ recipe.id }}/delete" style="display: inline;">
+                    <button type="submit" class="delete-btn" 
+                            onclick="return confirm('Delete this recipe?')">Delete</button>
+                </form>
+                <form method="POST" action="/recipes/{{ recipe.id }}/cook" style="display: inline;">
+                    <button type="submit" class="cook-btn">Cook</button>
+                </form>
             </div>
-            
-            <div class="recipe-grid">
-                {% for recipe in recipes %}
-                    <div class="recipe-card">
-                        <h3>{{ recipe.name }}</h3>
-                        <span class="category {{ recipe.category.lower() }}">{{ recipe.category }}</span>
-                    </div>
-                {% endfor %}
-            </div>
-        </main>
-    </body>
-    </html>
-    
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Add Recipe Modal -->
+    <div id="add-recipe-modal" class="modal">
+        <div class="modal-content">
+            <h2>Add New Recipe</h2>
+            <form method="POST" action="/recipes">
+                <div class="form-group">
+                    <label for="name">Recipe Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">Category:</label>
+                    <select id="category" name="category" required>
+                        <option value="Breakfast">Breakfast</option>
+                        <option value="Lunch">Lunch</option>
+                        <option value="Dinner">Dinner</option>
+                        <option value="Dessert">Dessert</option>
+                        <option value="Drink">Drink</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Ingredients:</label>
+                    <p>Add ingredients in the format: "1.5 kg Flour" (one per line)</p>
+                    <textarea name="ingredients" rows="5" placeholder="1.5 kg Flour&#10;2 pieces Chicken"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="steps">Cooking Steps:</label>
+                    <textarea id="steps" name="steps" rows="5" required placeholder="1. Mix ingredients...&#10;2. Bake at 350F..."></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit">Save Recipe</button>
+                    <button type="button" onclick="hideModal('add-recipe-modal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Recipe Modals (one for each recipe) -->
+    {% for recipe in recipes %}
+    <div id="edit-recipe-modal-{{ recipe.id }}" class="modal">
+        <div class="modal-content">
+            <h2>Edit Recipe</h2>
+            <form method="POST" action="/recipes/{{ recipe.id }}/edit">
+                <div class="form-group">
+                    <label for="name">Recipe Name:</label>
+                    <input type="text" id="name" name="name" value="{{ recipe.name }}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="3">{{ recipe.description }}</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">Category:</label>
+                    <select id="category" name="category" required>
+                        <option value="Breakfast" {% if recipe.category == 'Breakfast' %}selected{% endif %}>Breakfast</option>
+                        <option value="Lunch" {% if recipe.category == 'Lunch' %}selected{% endif %}>Lunch</option>
+                        <option value="Dinner" {% if recipe.category == 'Dinner' %}selected{% endif %}>Dinner</option>
+                        <option value="Dessert" {% if recipe.category == 'Dessert' %}selected{% endif %}>Dessert</option>
+                        <option value="Drink" {% if recipe.category == 'Drink' %}selected{% endif %}>Drink</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Ingredients:</label>
+                    <textarea name="ingredients" rows="5">
+                        {% for ing in recipe.ingredients %}
+                        {{ ing.quantity }} {{ ing.unit }} {{ ing.name }}
+                        {% endfor %}
+                    </textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="steps">Cooking Steps:</label>
+                    <textarea id="steps" name="steps" rows="5" required>{{ recipe.steps }}</textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit">Update Recipe</button>
+                    <button type="button" onclick="hideModal('edit-recipe-modal-{{ recipe.id }}')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+
+    <script>
+        function showModal(id) {
+            document.getElementById(id).style.display = 'block';
+        }
+        
+        function hideModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

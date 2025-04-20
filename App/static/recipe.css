@@ -1,0 +1,94 @@
+/* Recipe Grid */
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+.recipe-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.recipe-card h3 {
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+}
+
+.recipe-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.view-btn {
+    background-color: #5C6BC0;
+}
+
+.edit-btn {
+    background-color: #FFA000;
+}
+
+.delete-btn {
+    background-color: #E53935;
+}
+
+.cook-btn {
+    background-color: #43A047;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: white;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.form-actions button[type="button"] {
+    background-color: #757575;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .recipe-grid {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+    
+    .nav-links {
+        flex-wrap: wrap;
+    }
+    
+    .modal-content {
+        margin: 1rem;
+        padding: 1rem;
+    }
+}
