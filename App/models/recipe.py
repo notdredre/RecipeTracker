@@ -8,8 +8,9 @@ class Recipe(db.Model):
     steps = db.Column(db.Text, nullable=True)
     category = db.Column(db.String(50), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    ingredients = db.relationship("RecipeIngredient", backref="recipe", lazy=True)
-
+    ingredients = db.relationship(
+        "RecipeIngredient", backref="recipe", lazy=True, cascade="all, delete-orphan"
+    )
 
     def __init__(self, name, description, steps, category, user_id):
         self.name = name
@@ -20,7 +21,7 @@ class Recipe(db.Model):
 
     def __repr__(self):
         return f"ID: {self.id} Name: {self.name} Description: {self.description} Steps: {self.steps} Category: {self.category} User ID: {self.user_id} Ingredients: {self.ingredients}"
-    
+
     def get_json(self):
         return {
             "id": self.id,
@@ -29,5 +30,5 @@ class Recipe(db.Model):
             "steps": self.steps,
             "category": self.category,
             "user_id": self.user_id,
-            "ingredients": [ingredient.get_json() for ingredient in self.ingredients]
+            "ingredients": [ingredient.get_json() for ingredient in self.ingredients],
         }
