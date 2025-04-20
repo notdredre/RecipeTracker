@@ -5,6 +5,7 @@ from .index import index_views
 from .auth import auth_views
 from .admin import setup_admin
 from .recipe import recipe_views
+from .ingredient import ingredient_bp
 
-views = [user_views, index_views, auth_views, recipe_views] 
+views = [user_views, index_views, auth_views, recipe_views, ingredient_bp] 
 # blueprints must be added to this list
