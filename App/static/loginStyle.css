@@ -199,7 +199,7 @@ body {
   font-size: 19px;
 }
 
-.remember-forgot {
+.create {
   width: 350px;
   font-size: 14.5px;
   font-weight: 500;
@@ -208,17 +208,17 @@ body {
   justify-content: space-between;
 }
 
-.remember-forgot label input {
+.create label input {
   accent-color: #151515;
   margin-right: 3px;
 }
 
-.remember-forgot a {
-  color: #151515;
+.create a {
+  color: orange;
   text-decoration: none;
 }
 
-.remember-forgot a:hover {
+.create a:hover {
   text-decoration: underline;
 }
 

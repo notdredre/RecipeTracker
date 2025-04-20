@@ -44,6 +44,11 @@ h1, h2, h3 {
     color: var(--text-dark);
 }
 
+h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
 .nav-links {
     display: flex;
     gap: 1.5rem;
@@ -62,6 +67,12 @@ h1, h2, h3 {
 
 /* ===== FORM ELEMENTS ===== */
 input, button, textarea, select {
+=======
+    color: var(--accent);
+}
+
+/* ===== FORM ELEMENTS ===== */
+input, button {
     padding: 0.5rem;
     border: 1px solid var(--accent);
     border-radius: 4px;
@@ -81,12 +92,12 @@ button:hover {
     opacity: 0.9;
 }
 
-.search-input {
+.search-input, .add-input {
     flex: 1;
     border-radius: 4px 0 0 4px;
 }
 
-.search-button {
+.search-button, .add-button {
     border-radius: 0 4px 4px 0;
 }
 
