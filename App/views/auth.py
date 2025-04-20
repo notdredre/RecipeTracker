@@ -31,17 +31,23 @@ def identify_page():
 def login_action():
     data = request.form
     token = login(data['username'], data['password'])
-    response = redirect(request.referrer)
     if not token:
         flash('Bad username or password given'), 401
     else:
         flash('Login Successful')
+        response = redirect(url_for('index_views.home_page'))
         set_access_cookies(response, token) 
     return response
 
+
+@auth_views.route('/login', methods=['GET'])
+def login_page():
+    return render_template('login.html')
+
+
 @auth_views.route('/logout', methods=['GET'])
 def logout_action():
-    response = redirect(request.referrer) 
+    response = redirect(url_for('index_views.index_page'))
     flash("Logged Out!")
     unset_jwt_cookies(response)
     return response
