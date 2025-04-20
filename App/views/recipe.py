@@ -9,7 +9,7 @@ recipe_views = Blueprint('recipe_views', __name__, template_folder='../templates
 @jwt_required()
 def add_recipe_action():
     data = request.form
-    create_recipe(data['name'], data['description'], data['steps'], jwt_current_user.id)
+    create_recipe(data['name'], data['description'], data['steps'], data['category'], jwt_current_user.id)
     flash("Recipe created successfully!")
     return jsonify(data=data)
 
