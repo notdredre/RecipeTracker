@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user as jwt_current_user
 from App.controllers.recipe import *
-from App.controllers.ingredient import get_missing_ingredients
+from App.controllers.ingredient import get_missing_ingredients, add_recipe_ingredient, create_ingredient
 
 recipe_views = Blueprint('recipe_views', __name__, template_folder='../templates')
 
@@ -9,7 +9,15 @@ recipe_views = Blueprint('recipe_views', __name__, template_folder='../templates
 @jwt_required()
 def add_recipe_action():
     data = request.form
-    create_recipe(data['name'], data['description'], data['steps'], data['category'], jwt_current_user.id)
+    ingredients = []
+    for field in data:
+        if "ingredient_names" in field:
+            num = field[len("ingredient_names"):]
+            ingredients.append((data[f"ingredient_names{num}"], data[f"ingredient_quantities{num}"]))
+    new_recipe = create_recipe(data['name'], data['description'], data['steps'], data['category'], jwt_current_user.id)
+    for name, quantity in ingredients:
+        new_ingredient = create_ingredient(name)
+        add_recipe_ingredient(new_recipe.id, new_ingredient.id, quantity)
     flash("Recipe created successfully!")
     return jsonify(data=data)
 
