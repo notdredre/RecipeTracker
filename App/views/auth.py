@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, jsonify, request, flash, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user, unset_jwt_cookies, set_access_cookies
 
+from App.controllers.auth import signup
+
 
 from.index import index_views
 
@@ -51,6 +53,22 @@ def logout_action():
     flash("Logged Out!")
     unset_jwt_cookies(response)
     return response
+
+@auth_views.route('/signup', methods=['GET'])
+def signup_page():
+    return render_template('signup.html')
+
+@auth_views.route('/signup', methods=['POST'])
+def signup_action():
+    data = request.form
+    try:
+        signup(data['username'], data['password'])
+        flash('Account created successfully! Please login.')
+        return redirect(url_for('auth_views.login_page'))
+    except Exception as e:
+        flash('Error creating account. Username may be taken.')
+        return redirect(url_for('auth_views.signup_page'))
+    
 
 '''
 API Routes
