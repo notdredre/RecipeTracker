@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="recipe-form-container">
+    <h2>Edit Recipe</h2>
+    <form method="POST" action="{{ url_for('recipe_views.update_recipe_action', recipe_id=recipe.id) }}">
+        <div class="form-group">
+            <label for="name">Recipe Name:</label>
+            <input type="text" id="name" name="name" value="{{ recipe.name }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required>{{ recipe.description }}</textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="steps">Cooking Steps (one per line):</label>
+            <textarea id="steps" name="steps" rows="5" required>{{ recipe.steps }}</textarea>
+        </div>
+        
+        <button type="submit" class="submit-btn">Update Recipe</button>
+        <a href="{{ url_for('recipe_views.get_recipes_page') }}" class="cancel-btn">Cancel</a>
+    </form>
+</div>
+{% endblock %}

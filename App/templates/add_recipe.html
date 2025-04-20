@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="recipe-form-container">
+    <h2>Add New Recipe</h2>
+    <form method="POST" action="{{ url_for('recipe_views.add_recipe_action') }}">
+        <div class="form-group">
+            <label for="name">Recipe Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <select id="category" name="category" required>
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Dessert">Dessert</option>
+                <option value="Drink">Drink</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Ingredients:</label>
+            <div class="ingredients-container">
+                {% for i in range(5) %}
+                <div class="ingredient-row">
+                    <select name="ingredient_id_{{ i }}">
+                        <option value="">Select ingredient</option>
+                        {% for ingredient in all_ingredients %}
+                        <option value="{{ ingredient.id }}">{{ ingredient.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="number" step="0.01" min="0" name="quantity_{{ i }}" placeholder="Quantity">
+                    <select name="unit_{{ i }}">
+                        <option value="kg">kg</option>
+                        <option value="g">g</option>
+                        <option value="lbs">lbs</option>
+                        <option value="oz">oz</option>
+                    </select>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="steps">Cooking Steps (one per line):</label>
+            <textarea id="steps" name="steps" rows="5" required></textarea>
+        </div>
+        
+        <button type="submit" class="submit-btn">Save Recipe</button>
+        <a href="{{ url_for('recipe_views.get_recipes_page') }}" class="cancel-btn">Cancel</a>
+    </form>
+</div>
+{% endblock %}
