@@ -18,18 +18,31 @@ def get_recipes_by_name(name):
     recipes = Recipe.query.filter_by(name=name).all()
     return recipes
 
+def search_user_recipes(user_id, keywords):
+    recipes = []
+    for keyword in keywords:
+        search_names = Recipe.query.filter(Recipe.name.like(f'%{keyword}%'), Recipe.user_id == user_id).all()
+        for recipe in search_names:
+            if recipe not in recipes:
+                recipes.append(recipe)
+        search_desc = Recipe.query.filter(Recipe.description.like(f'%{keyword}%'), Recipe.user_id == user_id).all()
+        for recipe in search_desc:
+            if recipe not in recipes:
+                recipes.append(recipe)
+    return recipes
 
 def get_user_recipes(user_id):
     recipes = Recipe.query.filter_by(user_id=user_id).all()
     return recipes
 
 
-def update_recipe(recipe_id, name, description, steps):
+def update_recipe(recipe_id, name, description, steps, ingredients):
     recipe = get_recipe(recipe_id)
     if recipe:
         recipe.name = name
         recipe.description = description
         recipe.steps = steps
+        recipe.ingredients = ingredients
         db.session.commit()
         return True
     return False
