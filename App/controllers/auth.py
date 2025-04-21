@@ -1,4 +1,7 @@
-from flask_jwt_extended import create_access_token, jwt_required, JWTManager, get_jwt_identity, verify_jwt_in_request
+from functools import wraps
+from flask import flash, redirect, url_for
+from flask_jwt_extended import create_access_token, JWTManager, get_jwt_identity, verify_jwt_in_request
+from jwt import ExpiredSignatureError
 from App.database import db
 from App.models import User
 
@@ -33,6 +36,19 @@ def setup_jwt(app):
 
     return jwt
 
+def jwt_ignore_expired():
+    def wrapper(fn):
+        @wraps(fn)
+        def decorator(*args, **kwargs):
+            try:
+                verify_jwt_in_request()
+            except ExpiredSignatureError:
+                flash("Token expired, please log in again", "error")
+            except Exception:
+                return redirect(url_for('auth_views.login_page'))
+            return fn(*args, **kwargs)
+        return decorator
+    return wrapper
 
 # Context processor to make 'is_authenticated' available to all templates
 def add_auth_context(app):
