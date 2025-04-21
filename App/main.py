@@ -51,5 +51,9 @@ def create_app(overrides={}):
     def custom_unauthorized_response(error):
         flash("Must be logged in", "error")
         return render_template("login.html"), 401
+    @jwt.expired_token_loader
+    def custom_expired_response(header, payload):
+        flash("Token expired, please log in again", "error")
+        return render_template("login.html"), 401
     app.app_context().push()
     return app
