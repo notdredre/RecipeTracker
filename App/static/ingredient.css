@@ -41,12 +41,12 @@
 .add-form input[type="text"]:first-child {
     flex: 2;
     margin-right: 0.75rem;
-    max-width: 500px; /* adjust to your liking */
+    max-width: 500px; 
 }
 
 .add-form input[type="text"]:last-child {
     flex: 1;
-    max-width: 150px; /* adjust to your liking */
+    max-width: 150px; 
 }
 
 .add-form button {
