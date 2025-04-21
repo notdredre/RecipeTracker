@@ -97,9 +97,6 @@
 
             <div class="recipe-actions">
                 <form method="GET" style="display: inline;">
-                    <button type="submit"
-                        formaction="{{ url_for('recipe_views.get_recipe_detail_page', recipe_id=recipe.id) }}"
-                        class="view-btn" style="display: inline;">View</button>
                     <button type="button" onclick="showEditModal('{{ recipe.id }}')" class="edit-btn" style="display: inline;">Edit</button>
                     <button type="submit"
                         formaction="{{ url_for('recipe_views.delete_recipe_action', recipe_id=recipe.id) }}"
