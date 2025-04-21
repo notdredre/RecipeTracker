@@ -51,8 +51,25 @@
     <div class="recipe-grid">
         {% for recipe, ingredients in recipes %}
         <div class="recipe-card">
-            <h3>{{ recipe.name }}</h3>
-            <p>{{ recipe.description[:100] }}{% if recipe.description|length > 100 %}...{% endif %}</p>
+            <div class="card-header">
+                <h3>{{ recipe.name }}</h3>
+                <span class="recipe-category">{{ recipe.category }}</span>
+            </div>
+
+            <!-- Description -->
+             {% if recipe.description %}
+             <div class="card-section">
+                <h4 class="section-title">Description</h4>
+                <p class="section-content">{{ recipe.description }}</p>
+             </div>
+             {% endif %}
+
+             <!-- Ingredients Section -->
+              <div class="card-section">
+                <h4 class="section-title">Ingredients</h4>
+                <ul class="ingredient-list"
+              </div>
+
             <div class="recipe-actions">
                 <form method="GET" style="display: inline;">
                     <button type="submit"
