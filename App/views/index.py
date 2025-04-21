@@ -1,5 +1,5 @@
-from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify, url_for
-from App.controllers import create_user, initialize
+from flask import Blueprint, redirect, render_template, jsonify, url_for
+from App.controllers import initialize
 from App.controllers.recipe import get_user_recipes
 from App.controllers.ingredient import get_recipe_ingredients
 from flask_jwt_extended import jwt_required, current_user as jwt_current_user
@@ -7,7 +7,10 @@ from flask_jwt_extended import jwt_required, current_user as jwt_current_user
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 
 @index_views.route('/', methods=['GET'])
+@jwt_required(optional=True)
 def index_page():
+    if jwt_current_user:
+        return redirect(url_for('index_views.home_page'))
     return render_template('login.html')
 
 @index_views.route('/init', methods=['GET'])
