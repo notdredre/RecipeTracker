@@ -35,6 +35,7 @@
 
 .delete-button:hover {
     text-decoration: underline;
+    background-color: peachpuff;
 }
 
 .add-form input[type="text"]:first-child {
