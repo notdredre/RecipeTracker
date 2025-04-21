@@ -52,3 +52,17 @@
     margin-left: 0rem;
 }
 
+.logo-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-bar {
+    margin-left: auto; /* pushes nav-bar to the right */
+}
+
+.nav-bar nav {
+    display: flex;
+    gap: 1rem;
+}
