@@ -133,6 +133,12 @@
                         </div>
                     </div>
 
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="description" rows="3">{{ recipe.description }}</textarea>
+                    </div>
+
                     <!-- Ingredients (Dynamic fields) -->
                     <div class="form-group">
                         <label>Ingredients</label>
@@ -152,6 +158,12 @@
                         <button type="button" onclick="addIngredientField('edit-ingredients-{{ recipe.id }}')">
                             + Add Ingredient
                         </button>
+                    </div>
+
+                     <!-- Instructions -->
+                    <div class="form-group">
+                        <label>Instructions</label>
+                        <textarea name="steps" rows="6" required>{{ recipe.steps }}</textarea>
                     </div>
 
                     <!-- Submit/Cancel Buttons -->
