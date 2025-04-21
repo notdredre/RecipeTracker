@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Recipes</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='app_base.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='app_layout.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='app_forms.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='app_modals.css') }}">
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -27,18 +31,18 @@
 
     <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="flash {{ category }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="flash {{ category }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
     {% endwith %}
 
     <!-- Search Bar -->
     <div class="search-container">
         <form method="GET" action="/home">
             <input type="text" name="search" placeholder="Search recipes..." class="search-input"
-                   value="{{ request.args.get('search', '') }}">
+                value="{{ request.args.get('search', '') }}">
             <button type="submit">Search</button>
         </form>
     </div>
@@ -50,14 +54,17 @@
             <h3>{{ recipe.name }}</h3>
             <p>{{ recipe.description[:100] }}{% if recipe.description|length > 100 %}...{% endif %}</p>
             <div class="recipe-actions">
-                <a href="/recipes/{{ recipe.id }}" class="view-btn">View</a>
-                <a href="#" onclick="showEditModal('{{ recipe.id }}')" class="edit-btn">Edit</a>
-                <form method="POST" action="/recipes/{{ recipe.id }}/delete" style="display: inline;">
-                    <button type="submit" class="delete-btn" 
-                            onclick="return confirm('Delete this recipe?')">Delete</button>
-                </form>
-                <form method="POST" action="/recipes/{{ recipe.id }}/cook" style="display: inline;">
-                    <button type="submit" class="cook-btn">Cook</button>
+                <form method="GET" style="display: inline;">
+                    <button type="submit"
+                        formaction="{{ url_for('recipe_views.get_recipe_detail_page', recipe_id=recipe.id) }}"
+                        class="view-btn" style="display: inline;">View</button>
+                    <button type="button" onclick="showEditModal('{{ recipe.id }}')" class="edit-btn" style="display: inline;">Edit</button>
+                    <button type="submit"
+                        formaction="{{ url_for('recipe_views.delete_recipe_action', recipe_id=recipe.id) }}"
+                        class="delete-btn" style="display: inline;" onclick="return confirm('Delete this recipe?')">Delete</button>
+                    <button type="submit"
+                        formaction="{{ url_for('recipe_views.cook_recipe_action', recipe_id=recipe.id) }}"
+                        class="cook-btn" style="display: inline;">Cook</button>
                 </form>
             </div>
         </div>
@@ -66,9 +73,9 @@
         <div id="edit-recipe-modal-{{ recipe.id }}" class="modal">
             <div class="modal-content">
                 <h2>Edit {{ recipe.name }}</h2>
-                <form method="POST" action="/recipes/{{ recipe.id }}" id="edit-form-{{ recipe.id }}">
+                <form method="POST" action="{{ url_for('recipe_views.update_recipe_action', recipe_id=recipe.id) }}" id="edit-form-{{ recipe.id }}">
                     <input type="hidden" name="_method" value="PUT">
-                    
+
                     <!-- Name and Category -->
                     <div class="form-row">
                         <div class="form-group">
@@ -80,21 +87,26 @@
                             <select name="category" required>
                                 <option value="">Select Category</option>
                                 {% for cat in ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Drink'] %}
-                                <option value="{{ cat }}" {% if recipe.category == cat %}selected{% endif %}>{{ cat }}</option>
+                                <option value="{{ cat }}" {% if recipe.category==cat %}selected{% endif %}>{{ cat }}
+                                </option>
                                 {% endfor %}
                             </select>
                         </div>
                     </div>
-                    
+
                     <!-- Ingredients (Dynamic fields) -->
                     <div class="form-group">
                         <label>Ingredients</label>
                         <div class="ingredients-container" id="edit-ingredients-{{ recipe.id }}">
                             {% for ingredient, quantity in ingredients %}
                             <div class="ingredient-row" data-index="{{ loop.index - 1 }}">
-                                <input type="text" class="ingredient-name" name="ingredient_names{{ loop.index - 1}}" value="{{ ingredient.name }}" required>
-                                <input type="number" class="ingredient-qty" step="0.01" name="ingredient_quantities{{ loop.index - 1 }}" value="{{ quantity.quantity }}" required>
-                                <button type="button" class="remove-ingredient" onclick="removeIngredientField(this)">✕</button>
+                                <input type="text" class="ingredient-name" name="ingredient_names{{ loop.index - 1}}"
+                                    value="{{ ingredient.name }}" required>
+                                <input type="number" class="ingredient-qty" step="0.01"
+                                    name="ingredient_quantities{{ loop.index - 1 }}" value="{{ quantity.quantity }}"
+                                    required>
+                                <button type="button" class="remove-ingredient"
+                                    onclick="removeIngredientField(this)">✕</button>
                             </div>
                             {% endfor %}
                         </div>
@@ -102,7 +114,7 @@
                             + Add Ingredient
                         </button>
                     </div>
-                    
+
                     <!-- Submit/Cancel Buttons -->
                     <div class="form-actions">
                         <button type="submit">Update</button>
@@ -124,7 +136,7 @@
                         <label for="name">Recipe Name</label>
                         <input type="text" id="name" name="name" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="category">Category</label>
                         <select id="category" name="category" required>
@@ -137,33 +149,38 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="description">Description</label>
                     <textarea id="description" name="description" rows="3"></textarea>
                 </div>
-                
+
                 <div class="form-group">
                     <label>Ingredients</label>
                     <div class="ingredients-container" id="ingredients-container">
-                        <div class="ingredient-row" data-index="0">  <!-- Start counter at 0 -->
-                            <input type="text" class="ingredient-name" name="ingredient_names0" placeholder="Ingredient" required>
-                            <input type="number" step="0.01" min="0" class="ingredient-qty" name="ingredient_quantities0" placeholder="Quantity" required>
+                        <div class="ingredient-row" data-index="0"> <!-- Start counter at 0 -->
+                            <input type="text" class="ingredient-name" name="ingredient_names0" placeholder="Ingredient"
+                                required>
+                            <input type="number" step="0.01" min="0" class="ingredient-qty"
+                                name="ingredient_quantities0" placeholder="Quantity" required>
                             <div class="ingredient-actions">
-                                <button type="button" class="remove-ingredient" onclick="removeIngredientField(this)">✕</button>
+                                <button type="button" class="remove-ingredient"
+                                    onclick="removeIngredientField(this)">✕</button>
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="add-ingredient-btn" onclick="addIngredientField('ingredients-container')">
+                    <button type="button" class="add-ingredient-btn"
+                        onclick="addIngredientField('ingredients-container')">
                         <span>+</span> Add Another Ingredient
                     </button>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="steps">Cooking Steps</label>
-                    <textarea id="steps" name="steps" rows="5" required placeholder="Enter each step on a new line"></textarea>
+                    <textarea id="steps" name="steps" rows="5" required
+                        placeholder="Enter each step on a new line"></textarea>
                 </div>
-                
+
                 <div class="form-actions">
                     <button type="submit" class="submit-btn">Save Recipe</button>
                     <button type="button" class="cancel-btn" onclick="hideModal('add-recipe-modal')">Cancel</button>
@@ -172,43 +189,43 @@
         </div>
     </div>
 
-   
+
     <script>
         // Global variables
         let ingredientCounter = 1;
-        
+
         // Modal functions
         function showModal(id) {
             document.getElementById(id).style.display = 'block';
             document.body.style.overflow = 'hidden';
         }
-        
+
         function hideModal(id) {
             document.getElementById(id).style.display = 'none';
             document.body.style.overflow = 'auto';
         }
-        
+
         // Close modal when clicking outside
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (event.target.className === 'modal') {
                 hideModal(event.target.id);
             }
         }
-    
+
         // Initialize ingredient counter for a specific container
         function initIngredientCounter(containerId = 'ingredients-container') {
             const container = document.getElementById(containerId);
             const rows = container.querySelectorAll('.ingredient-row');
             ingredientCounter = 0;
-    
+
             rows.forEach(row => {
                 ingredientCounter++;
             });
-    
+
             console.log(ingredientCounter)
             return ingredientCounter;
         }
-    
+
         // Add ingredient field to specified container
         function addIngredientField(containerId = 'ingredients-container') {
             const container = document.getElementById(containerId);
@@ -217,22 +234,22 @@
             const newRow = document.createElement('div');
             newRow.className = 'ingredient-row';
             newRow.dataset.index = ++highest;
-            
+
             newRow.innerHTML = `
                 <input type="text" class="ingredient-name" name="ingredient_names${newRow.dataset.index}" placeholder="Ingredient" required>
                 <input type="number" step="0.01" min="0" class="ingredient-qty" name="ingredient_quantities${newRow.dataset.index}" placeholder="Quantity" required>
                 <button type="button" class="remove-ingredient" onclick="removeIngredientField(this)">✕</button>
             `;
-            
+
             container.appendChild(newRow);
         }
-    
+
         // Remove ingredient field (works for both add/edit modals)
         function removeIngredientField(button) {
             const row = button.closest('.ingredient-row');
             const container = row.parentElement;
             const rows = container.querySelectorAll('.ingredient-row');
-            
+
             if (rows.length > 1) {
                 row.remove();
             } else {
@@ -243,20 +260,21 @@
                 });
             }
         }
-    
+
         // When showing add modal
         function showAddModal() {
             showModal('add-recipe-modal');
             initIngredientCounter(); // Initialize counter for add modal
         }
-    
+
         // When showing edit modal
         function showEditModal(recipeId) {
             showModal('edit-recipe-modal-' + recipeId);
             initIngredientCounter('edit-ingredients-' + recipeId); // Initialize counter for edit modal
         }
     </script>
-    
-    
+
+
 </body>
+
 </html>

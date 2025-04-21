@@ -58,8 +58,8 @@ nav {
 /* Recipe Grid */
 .recipe-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: 3rem;
     padding: 2rem;
     max-width: 1400px;
     margin: 0 auto;
@@ -67,10 +67,12 @@ nav {
 
 .recipe-card {
     background-color: white;
+    float: left;
     padding: 1.8rem;
     border-radius: 10px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
+    width: max-content;
 }
 
 .recipe-card:hover {
@@ -87,6 +89,9 @@ nav {
 .recipe-card p {
     color: #555;
     margin-bottom: 1.2rem;
+    width: 20rem;
+    height: 4rem;
+    text-overflow: clip;
 }
 
 .recipe-actions {
