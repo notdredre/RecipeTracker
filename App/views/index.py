@@ -23,9 +23,8 @@ def health_check():
 @jwt_required()
 def home_page():
     query = request.args.get('search')
-    query = query.split(' ')
-    print(query)
     if query:
+        query = query.split(' ')
         all_recipes = search_user_recipes(jwt_current_user.id, query)
     else:
         all_recipes = get_user_recipes(jwt_current_user.id)
