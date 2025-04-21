@@ -57,7 +57,7 @@ def update_recipe_action(recipe_id):
         flash("Recipe does not exist!", "error")
     return redirect(request.referrer)
 
-@recipe_views.route('/recipes/<int:recipe_id>/delete', methods=['POST'])
+@recipe_views.route('/recipes/<int:recipe_id>/delete', methods=['GET'])
 @jwt_required()
 def delete_recipe_action(recipe_id):
     recipe = get_recipe(recipe_id)
@@ -71,7 +71,7 @@ def delete_recipe_action(recipe_id):
     return redirect(url_for('index_views.home_page'))
 
 
-@recipe_views.route('/recipes/<int:recipe_id>/cook', methods=['POST'])
+@recipe_views.route('/recipes/<int:recipe_id>/cook', methods=['GET'])
 @jwt_required()
 def cook_recipe_action(recipe_id):
     recipe = get_recipe(recipe_id)
