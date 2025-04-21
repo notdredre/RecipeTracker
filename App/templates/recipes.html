@@ -67,7 +67,20 @@
              <!-- Ingredients Section -->
               <div class="card-section">
                 <h4 class="section-title">Ingredients</h4>
-                <ul class="ingredient-list"
+                <ul class="ingredient-list">
+                    {% for ingredient, quantity in ingredients %}
+                    {% set is_missing = missing_ingredients and ingredient.id in missing_ingredients|map(attributes='id') %}
+                    <li class="ingredient-item {% if is_missing %}missing-ingredient{% endif %}">
+                        <span class="ingredient-name">{{ ingredient.name }}</span>
+                        <span class="ingredient-quantity">
+                            {{ quantity.quantity }}
+                            {% if is_missing %}
+                            <span class="missing-amount">(Need: {{ missing_ingredients[loop.index0].quantity }})</span>
+                            {% endif %}
+                        </span>
+                    </li>
+                    {% endfor %}
+                </ul>
               </div>
 
             <div class="recipe-actions">
