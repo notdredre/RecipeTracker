@@ -1,0 +1,268 @@
+/* app_ingredients.css */
+
+/* Page Structure */
+.ingredients-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+/* Header Styles */
+.page-header {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem 2rem;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    height: 50px;
+}
+
+.main-nav {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-link {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.nav-link:hover {
+    color: #007bff;
+}
+
+/* Main Content */
+.ingredients-content {
+    flex: 1;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Search Section */
+.search-section {
+    margin-bottom: 1.5rem;
+}
+
+.ingredient-search-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-group {
+    position: relative;
+}
+
+.search-field {
+    width: 100%;
+    padding: 0.75rem 3rem 0.75rem 1.25rem;
+    border: 1px solid #ddd;
+    border-radius: 2rem;
+    font-size: 1rem;
+}
+
+.search-button {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.clear-search {
+    position: absolute;
+    right: 3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    text-decoration: none;
+}
+
+/* Add Ingredient Section */
+.add-ingredient-section {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.ingredient-form {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 1rem;
+}
+
+.form-input {
+    padding: 0.75rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.submit-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+    background-color: #218838;
+}
+
+/* Ingredients List Section */
+.ingredients-list-section {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.items-count {
+    background: #f1f1f1;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+
+/* Table Styles */
+.table-container {
+    overflow-x: auto;
+}
+
+.ingredients-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ingredients-table th {
+    text-align: left;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.ingredients-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: middle;
+}
+
+.ingredient-row:hover {
+    background-color: #f8f9fa;
+}
+
+.ingredient-name {
+    font-weight: 500;
+    color: #212529;
+}
+
+.ingredient-amount {
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.action-button {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.action-button.delete {
+    background-color: #f8f9fa;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+.action-button.delete:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .ingredients-table {
+        display: block;
+    }
+    
+    .ingredients-table thead {
+        display: none;
+    }
+    
+    .ingredients-table tbody tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+    }
+    
+    .ingredients-table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.75rem;
+    }
+    
+    .ingredients-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        margin-right: 1rem;
+        color: #495057;
+    }
+}

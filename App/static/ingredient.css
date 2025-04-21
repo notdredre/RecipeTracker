@@ -1,123 +1,124 @@
-/* ===== INGREDIENTS-SPECIFIC STYLES ===== */
-.search-add-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 1rem;
-    align-items: flex-start;
-    padding-left: 2rem; 
-}
+       /* Additional Styles for Ingredients Page */
+        .ingredients-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
 
-.search-form,
-.add-form {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
+        .search-add-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            background-color: var(--primary);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
 
+        .search-form, .add-form {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
 
-.search-form input[type="text"] {
-    width: 440px; 
-    max-width: 100%;
-}
+        .search-input, .add-input {
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
 
+        .search-input:focus, .add-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.2);
+        }
 
-.add-form input[name="name"] {
-    width: 320px;
-    margin-right: 0.5rem;
-}
+        .search-button, .add-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            background-color: var(--accent);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
+        .search-button:hover, .add-button:hover {
+            background-color: var(--accent-dark);
+            transform: translateY(-1px);
+        }
 
-.add-form input[name="quantity"] {
-    width: 120px;
-    flex: 0 0 auto;
-}
+        .ingredients-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
+        .ingredient-item {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
 
-.search-form button,
-.add-form button {
-    background-color: #ff7043;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+        .ingredient-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
 
-.search-form button:hover,
-.add-form button:hover {
-    background-color: #ff5722;
-}
+        .ingredient-item span {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
 
+        .ingredient-item span:first-child {
+            font-weight: 500;
+        }
 
-.ingredients-list {
-    margin: 2rem;
-    display: grid;
-    gap: 1rem;
-}
+        .ingredient-item span:nth-child(2) {
+            font-weight: 600;
+            color: var(--accent);
+        }
 
-.ingredient-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: var(--text-light);
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
+        .delete-button {
+            padding: 0.5rem 1rem;
+            background-color: #e53935;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-.delete-button {
-    color: var(--accent);
-    text-decoration: none;
-    font-weight: bold;
-    cursor: pointer;
-}
+        .delete-button:hover {
+            background-color: #c62828;
+            transform: translateY(-1px);
+        }
 
-.delete-button:hover {
-    text-decoration: underline;
-    background-color: peachpuff;
-}
-
-
-.logo-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-}
-
-.logo-container h1 {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    margin: 0;
-}
-
-
-.nav-bar {
-    margin-left: auto;
-}
-
-.nav-bar nav {
-    display: flex;
-    gap: 1rem;
-}
-
-.nav-bar nav a {
-    padding: 0.5rem 1rem;
-    background-color: #ff7043;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.nav-bar nav a:hover {
-    background-color: darkorange;
-}
-
-
+        @media (max-width: 768px) {
+            .search-add-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .search-form, .add-form {
+                width: 100%;
+            }
+            
+            .ingredients-list {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+        }
