@@ -1,6 +1,6 @@
 from App.models import Recipe, RecipeIngredient, UserInventory
 from App.database import db
-
+from .ingredient import get_missing_ingredients
 
 def create_recipe(name, description, steps, category, user_id):
     new_recipe = Recipe(name, description, steps, category, user_id)
@@ -33,6 +33,8 @@ def search_user_recipes(user_id, keywords):
 
 def get_user_recipes(user_id):
     recipes = Recipe.query.filter_by(user_id=user_id).all()
+    for recipe in recipes:
+        recipe.missing_ingredients = get_missing_ingredients(user_id, recipe.id)
     return recipes
 
 
