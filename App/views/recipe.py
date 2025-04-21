@@ -33,7 +33,7 @@ def get_recipe_detail_page(recipe_id):
     missing_ingredients = get_missing_ingredients(jwt_current_user.id, recipe_id)
     return jsonify(recipe=recipe.get_json(), missing_ingredients=[(ingredient.get_json(), quantity) for ingredient, quantity in missing_ingredients])
 
-@recipe_views.route('/recipes/<int:recipe_id>', methods=['POST']) #Change this
+@recipe_views.route('/recipes/<int:recipe_id>', methods=['POST'])
 @jwt_required()
 def update_recipe_action(recipe_id):
     data = request.form
@@ -49,7 +49,7 @@ def update_recipe_action(recipe_id):
         for name, quantity in form_ingredients:
             ingredient = create_ingredient(name)
             add_recipe_ingredient(recipe_id, ingredient.id, quantity)
-        if update_recipe(recipe_id, data['name'], recipe.description, recipe.steps, data['category']):
+        if update_recipe(recipe_id, data['name'], data['description'], data['steps'], data['category']):
             flash("Updated recipe successfully!")
         else:
             flash("Could not update recipe!", "error")
