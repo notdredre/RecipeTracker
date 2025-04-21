@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, jsonify, url_for
+from flask import Blueprint, redirect, render_template, jsonify, url_for, request
 from App.controllers import initialize
 from App.controllers.recipe import get_user_recipes, search_user_recipes
 from App.controllers.ingredient import get_recipe_ingredients
