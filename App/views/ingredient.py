@@ -44,7 +44,7 @@ def add_ingredient():
     else:
         new_ingredient = create_ingredient(name)
         add_user_ingredient(user_id, new_ingredient.id, quantity)
-    return redirect(request.referrer)
+    return redirect(url_for('ingredient.get_ingredients'))
 
 
 @ingredient_bp.route("/<int:ingredient_id>", methods=["GET"])
