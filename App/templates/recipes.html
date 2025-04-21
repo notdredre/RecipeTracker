@@ -19,7 +19,7 @@
     <header>
         <div class="logo-container">
             <img src="/static/logo.png" alt="Logo" class="logo">
-            <h1>My Cookbook</h1>
+            <h1>My Recipe App</h1>
         </div>
         <nav>
             <a href="/home">Home</a>
@@ -51,52 +51,13 @@
     <div class="recipe-grid">
         {% for recipe, ingredients in recipes %}
         <div class="recipe-card">
-            <div class="card-header">
-                <h3>{{ recipe.name }}</h3>
-                <span class="recipe-category">{{ recipe.category }}</span>
-            </div>
-
-            <!-- Description -->
-            {% if recipe.description %}
-            <div class="card-section">
-            <h4 class="section-title">Description</h4>
-            <p class="section-content">{{ recipe.description }}</p>
-            </div>
-            {% endif %}
-
-            <!-- Ingredients Section -->
-            <div class="card-section">
-            <h4 class="section-title">Ingredients</h4>
-            <ul class="ingredient-list">
-                {% for ingredient, quantity in ingredients %}
-                {% set is_missing = missing_ingredients and ingredient.id in missing_ingredients|map(attributes='id') %}
-                <li class="ingredient-item {% if is_missing %}missing-ingredient{% endif %}">
-                    <span class="ingredient-name">{{ ingredient.name }}</span>
-                    <span class="ingredient-quantity">
-                        {{ quantity.quantity }} kg
-                        {% if is_missing %}
-                        <span class="missing-amount">(Need: {{ missing_ingredients|selectattr('id', 'equalto', ingredient.id)|first.quantity }} kg)</span>
-                        {% endif %}
-                    </span>
-                </li>
-                {% endfor %}
-            </ul>
-            </div>
-
-            <!-- Instructions section-->
-            {% if recipe.steps %}
-            <div class="card-section">
-                <h4 class="section-title">Instructions</h4>
-                <ol class="instruction-list">
-                    {% for step in recipe.steps.split('\n') if step.strip() %}
-                    <li class="instruction-step">{{ step }}</li>
-                    {% endfor %}
-                </ol>
-            </div>
-            {% endif %}
-
+            <h3>{{ recipe.name }}</h3>
+            <p>{{ recipe.description[:100] }}{% if recipe.description|length > 100 %}...{% endif %}</p>
             <div class="recipe-actions">
                 <form method="GET" style="display: inline;">
+                    <button type="submit"
+                        formaction="{{ url_for('recipe_views.get_recipe_detail_page', recipe_id=recipe.id) }}"
+                        class="view-btn" style="display: inline;">View</button>
                     <button type="button" onclick="showEditModal('{{ recipe.id }}')" class="edit-btn" style="display: inline;">Edit</button>
                     <button type="submit"
                         formaction="{{ url_for('recipe_views.delete_recipe_action', recipe_id=recipe.id) }}"
@@ -133,12 +94,6 @@
                         </div>
                     </div>
 
-                    <!-- Description -->
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea name="description" rows="3">{{ recipe.description }}</textarea>
-                    </div>
-
                     <!-- Ingredients (Dynamic fields) -->
                     <div class="form-group">
                         <label>Ingredients</label>
@@ -158,12 +113,6 @@
                         <button type="button" onclick="addIngredientField('edit-ingredients-{{ recipe.id }}')">
                             + Add Ingredient
                         </button>
-                    </div>
-
-                     <!-- Instructions -->
-                    <div class="form-group">
-                        <label>Instructions</label>
-                        <textarea name="steps" rows="6" required>{{ recipe.steps }}</textarea>
                     </div>
 
                     <!-- Submit/Cancel Buttons -->
