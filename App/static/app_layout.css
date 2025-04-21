@@ -148,21 +148,45 @@ nav {
     margin-left: 1rem;
 }
 
-/* Missing Ingredients */
+/* Missing Ingredients Styling */
 .ingredient-item.missing-ingredient {
-    color: #dc3545;
-    font-weight: 500;
+    background-color: #fff5f5;
+    border-left: 3px solid #dc3545;
+    padding-left: 0.5rem;
 }
 
 .ingredient-item.missing-ingredient .ingredient-name {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.ingredient-item.missing-ingredient .current-amount {
     text-decoration: line-through;
+    color: #999;
+    margin-right: 0.5rem;
 }
 
 .ingredient-item.missing-ingredient .missing-amount {
-    margin-left: 0.5rem;
-    font-weight: bold;
     color: #dc3545;
-    display: inline-block;
+    font-weight: bold;
+}
+
+/* Visual warning for recipes with missing ingredients */
+.recipe-card:has(.missing-ingredient) {
+    border: 2px solid #ffcccc;
+    position: relative;
+}
+
+.recipe-card:has(.missing-ingredient)::before {
+    content: "Missing Ingredients";
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #dc3545;
+    color: white;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.7rem;
+    border-bottom-left-radius: 5px;
 }
 
 /* Instructions */

@@ -73,9 +73,9 @@
                 <li class="ingredient-item {% if is_missing %}missing-ingredient{% endif %}">
                     <span class="ingredient-name">{{ ingredient.name }}</span>
                     <span class="ingredient-quantity">
-                        {{ quantity.quantity }}
+                        {{ quantity.quantity }} kg
                         {% if is_missing %}
-                        <span class="missing-amount">(Need: {{ missing_ingredients[loop.index0].quantity }})</span>
+                        <span class="missing-amount">(Need: {{ missing_ingredients|selectattr('id', 'equalto', ingredient.id)|first.quantity }} kg)</span>
                         {% endif %}
                     </span>
                 </li>
