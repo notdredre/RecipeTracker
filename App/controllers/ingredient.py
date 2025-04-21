@@ -8,7 +8,7 @@ def create_ingredient(name):
         db.session.add(new_ingredient)
         db.session.commit()
         return new_ingredient
-    return None
+    return exists
 
 def get_ingredient(ingredient_id):
     ingredient = Ingredient.query.filter_by(ingredient_id=ingredient_id).first()
@@ -27,10 +27,13 @@ def update_ingredient(ingredient_id, name):
     return False
 
 def add_recipe_ingredient(recipe_id, ingredient_id, quantity):
-    new_recipe_ingredient = RecipeIngredient(recipe_id, ingredient_id, quantity)
-    db.session.add(new_recipe_ingredient)
-    db.session.commit()
-    return new_recipe_ingredient
+    exists = get_recipe_ingredient(recipe_id, ingredient_id)
+    if not exists:
+        new_recipe_ingredient = RecipeIngredient(recipe_id, ingredient_id, quantity)
+        db.session.add(new_recipe_ingredient)
+        db.session.commit()
+        return new_recipe_ingredient
+    return exists
 
 def get_recipe_ingredients(recipe_id):
     ingredients = db.session.query(Ingredient, RecipeIngredient).filter(RecipeIngredient.recipe_id == recipe_id).join(Ingredient, RecipeIngredient.ingredient_id == Ingredient.id).all()
@@ -58,10 +61,13 @@ def update_recipe_ingredient(recipe_id, ingredient_id, name, quantity):
     return False
 
 def add_user_ingredient(user_id, ingredient_id, quantity):
-    new_user_ingredient = UserInventory(user_id, ingredient_id, quantity)
-    db.session.add(new_user_ingredient)
-    db.session.commit()
-    return new_user_ingredient
+    exists = get_user_ingredient(user_id, ingredient_id)
+    if not exists:
+        new_user_ingredient = UserInventory(user_id, ingredient_id, quantity)
+        db.session.add(new_user_ingredient)
+        db.session.commit()
+        return new_user_ingredient
+    return exists
 
 def get_user_ingredients(user_id):
     ingredients = db.session.query(Ingredient, UserInventory).filter(UserInventory.user_id == user_id).join(Ingredient, UserInventory.ingredient_id == Ingredient.id).all()
