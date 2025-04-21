@@ -36,3 +36,18 @@
 .delete-button:hover {
     text-decoration: underline;
 }
+
+.add-form input[type="text"]:first-child {
+    flex: 2;
+    margin-right: 0.75rem;
+    max-width: 500px; /* adjust to your liking */
+}
+
+.add-form input[type="text"]:last-child {
+    flex: 1;
+    max-width: 150px; /* adjust to your liking */
+}
+
+.add-form button {
+    margin-left: 0rem;
+}
