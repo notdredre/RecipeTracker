@@ -57,31 +57,43 @@
             </div>
 
             <!-- Description -->
-             {% if recipe.description %}
-             <div class="card-section">
-                <h4 class="section-title">Description</h4>
-                <p class="section-content">{{ recipe.description }}</p>
-             </div>
-             {% endif %}
+            {% if recipe.description %}
+            <div class="card-section">
+            <h4 class="section-title">Description</h4>
+            <p class="section-content">{{ recipe.description }}</p>
+            </div>
+            {% endif %}
 
-             <!-- Ingredients Section -->
-              <div class="card-section">
-                <h4 class="section-title">Ingredients</h4>
-                <ul class="ingredient-list">
-                    {% for ingredient, quantity in ingredients %}
-                    {% set is_missing = missing_ingredients and ingredient.id in missing_ingredients|map(attributes='id') %}
-                    <li class="ingredient-item {% if is_missing %}missing-ingredient{% endif %}">
-                        <span class="ingredient-name">{{ ingredient.name }}</span>
-                        <span class="ingredient-quantity">
-                            {{ quantity.quantity }}
-                            {% if is_missing %}
-                            <span class="missing-amount">(Need: {{ missing_ingredients[loop.index0].quantity }})</span>
-                            {% endif %}
-                        </span>
-                    </li>
+            <!-- Ingredients Section -->
+            <div class="card-section">
+            <h4 class="section-title">Ingredients</h4>
+            <ul class="ingredient-list">
+                {% for ingredient, quantity in ingredients %}
+                {% set is_missing = missing_ingredients and ingredient.id in missing_ingredients|map(attributes='id') %}
+                <li class="ingredient-item {% if is_missing %}missing-ingredient{% endif %}">
+                    <span class="ingredient-name">{{ ingredient.name }}</span>
+                    <span class="ingredient-quantity">
+                        {{ quantity.quantity }}
+                        {% if is_missing %}
+                        <span class="missing-amount">(Need: {{ missing_ingredients[loop.index0].quantity }})</span>
+                        {% endif %}
+                    </span>
+                </li>
+                {% endfor %}
+            </ul>
+            </div>
+
+            <!-- Instructions section-->
+            {% if recipe.steps %}
+            <div class="card-section">
+                <h4 class="section-title">Instructions</h4>
+                <ol class="instruction-list">
+                    {% for step in recipe.steps.split('\n') if step.strip() %}
+                    <li class="instruction-step">{{ step }}</li>
                     {% endfor %}
-                </ul>
-              </div>
+                </ol>
+            </div>
+            {% endif %}
 
             <div class="recipe-actions">
                 <form method="GET" style="display: inline;">
