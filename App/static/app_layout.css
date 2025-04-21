@@ -104,16 +104,74 @@ nav {
 
 /* ===== SEARCH CONTAINER ===== */
 .search-container {
-    padding: 1.5rem 2rem;
+    padding: 1.25rem 2rem 1.75rem;
     background-color: var(--primary);
-    border-bottom: 1px solid rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
 }
 
-.search-container form {
-    display: flex;
-    max-width: 800px;
-    width: 100%;
+.search-wrapper {
+    max-width: 650px;
     margin: 0 auto;
+    position: relative;
+}
+
+.search-container input[type="search"] {
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+    padding-right: 3.5rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.05rem;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    background-color: white;
+    color: var(--text-dark);
+}
+
+.search-container input[type="search"]:focus {
+    outline: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+    transform: translateY(-1px);
+}
+
+.search-container button[type="submit"] {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--accent);
+    font-size: 1.3rem;
+    transition: transform 0.2s ease;
+}
+
+.search-container button[type="submit"]:hover {
+    transform: translateY(-50%) scale(1.1);
+    color: var(--accent-dark);
+}
+
+.search-container button[type="submit"]:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* Optional: Magnifying glass icon */
+.search-container button[type="submit"]::after {
+    content: "🔍"; /* Or use font-awesome icon */
+    display: inline-block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .search-container {
+        padding: 1rem 1.5rem;
+    }
+    .search-container input[type="search"] {
+        padding: 0.75rem 1.25rem;
+        padding-right: 3rem;
+        font-size: 1rem;
+    }
 }
 
 /* ===== RECIPE GRID ===== */
