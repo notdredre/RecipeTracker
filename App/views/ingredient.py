@@ -4,6 +4,7 @@ from App.controllers.ingredient import (
     get_user_ingredients,
     get_user_ingredient,
     add_user_ingredient,
+    search_user_ingredients,
     update_user_ingredient,
     delete_user_ingredient,
     get_ingredient_by_name,
@@ -17,8 +18,11 @@ ingredient_bp = Blueprint("ingredient", __name__, url_prefix="/ingredients")
 @jwt_required()
 def get_ingredients():
     user_id = get_jwt_identity()
-    ingredients = []
-    if get_user_ingredients(user_id):
+    query = request.args.get('search')
+    if query:
+        query = query.split(' ')
+        ingredients = search_user_ingredients(user_id, query)
+    else:
         ingredients = get_user_ingredients(user_id)
     return render_template("ingredients.html", ingredients=ingredients)
 
@@ -40,7 +44,7 @@ def add_ingredient():
     else:
         new_ingredient = create_ingredient(name)
         add_user_ingredient(user_id, new_ingredient.id, quantity)
-    return redirect(request.referrer)
+    return redirect(url_for('ingredient.get_ingredients'))
 
 
 @ingredient_bp.route("/<int:ingredient_id>", methods=["GET"])

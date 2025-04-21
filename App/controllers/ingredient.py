@@ -77,6 +77,14 @@ def get_user_ingredient(user_id, ingredient_id):
     ingredient = db.session.query(Ingredient, UserInventory).filter(UserInventory.user_id == user_id, UserInventory.ingredient_id == ingredient_id).join(Ingredient, UserInventory.ingredient_id == Ingredient.id).first()
     return ingredient
 
+def search_user_ingredients(user_id, keywords):
+    ingredients = []
+    for keyword in keywords:
+        keyword_ingredients = db.session.query(Ingredient, UserInventory).filter(UserInventory.user_id == user_id, Ingredient.name.like(f'%{keyword}%')).join(Ingredient, UserInventory.ingredient_id == Ingredient.id).all()
+        for ingredient, inventory in keyword_ingredients:
+            ingredients.append((ingredient, inventory))
+    return ingredients
+
 def delete_user_ingredient(user_id, ingredient_id):
     if get_user_ingredient(user_id, ingredient_id):
         _, inventory = get_user_ingredient(user_id, ingredient_id)
