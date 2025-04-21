@@ -17,16 +17,20 @@
 <body>
     <!-- Header -->
     <header>
-        <div class="logo-container">
+        <div class="logo-group">
             <img src="/static/logo.png" alt="Logo" class="logo">
             <h1>My Cookbook</h1>
         </div>
-        <nav>
-            <a href="/home">Home</a>
-            <a href="/ingredients">My Ingredients</a>
-            <a href="#" onclick="showAddModal()">Add Recipe</a>
-            <a href="/logout">Logout</a>
-        </nav>
+        
+        <div class="nav-center">
+            <nav class="nav-links">
+                <a href="/home">Home</a>
+                <a href="/ingredients">My Ingredients</a>
+                <a href="#" onclick="showAddModal()">Add Recipe</a>
+                <a href="/logout">Logout</a>
+            </nav>
+        </div>
+        
     </header>
 
     <!-- Flash Messages -->
@@ -40,13 +44,15 @@
 
     <!-- Search Bar -->
     <div class="search-container">
-        <form method="GET" action="/home">
-            <input type="text" name="search" placeholder="Search recipes..." class="search-input"
-                value="{{ request.args.get('search', '') }}">
-            <button type="submit">Search</button>
+        <form class="search-wrapper" method="GET" action="/home">
+            <input type="text" name="search" placeholder="Search recipes..." 
+                   class="search-input" value="{{ request.args.get('search', '') }}">
+            <button type="submit" class="search-submit">🔍</button>
+            <a href="/home" class="search-clear">X</a>
         </form>
     </div>
 
+    
     <!-- Recipe Grid -->
     <div class="recipe-grid">
         {% for recipe, ingredients in recipes %}
