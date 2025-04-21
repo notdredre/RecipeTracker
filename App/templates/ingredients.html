@@ -8,26 +8,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='app_base.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='app_layout.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='app_forms.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='app_ingredients.css') }}">
 </head>
 
-<body class="ingredients-page">
-    <!-- Header -->
-    <header class="page-header">
-        <div class="header-content">
-            <div class="logo-group">
-                <img src="/static/logo.png" alt="Logo" class="logo">
-                <h1>My Cookbook</h1>
-            </div>
-            
-            <nav class="main-nav">
-                <a href="/home" class="nav-link">Return to Recipes</a>
-                <a href="/logout" class="nav-link">Logout</a>
-            </nav>
-        </div>
-    </header>
+<!-- Header -->
+<header >
+    <div class="logo-group">
+        <img src="/static/logo.png" alt="Logo" class="logo">
+        <h1>My Ingredients</h1>
+    </div>
+    
+    <div class="nav-center">
+        <nav class="nav-links">
+            <a href="/home">Return to Recipes</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </div>
+    
+</header>
 
+<body class="ingredients-page">
     <!-- Main Content -->
     <main class="ingredients-content">
         <!-- Search Section -->
