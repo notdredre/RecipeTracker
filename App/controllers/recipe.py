@@ -36,13 +36,14 @@ def get_user_recipes(user_id):
     return recipes
 
 
-def update_recipe(recipe_id, name, description, steps, ingredients):
+
+def update_recipe(recipe_id, name, description, steps, category):
     recipe = get_recipe(recipe_id)
     if recipe:
         recipe.name = name
         recipe.description = description
         recipe.steps = steps
-        recipe.ingredients = ingredients
+        recipe.category = category
         db.session.commit()
         return True
     return False
