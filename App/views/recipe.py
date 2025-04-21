@@ -24,7 +24,7 @@ def add_recipe_action():
         new_ingredient = create_ingredient(name)
         add_recipe_ingredient(new_recipe.id, new_ingredient.id, quantity)
     flash("Recipe created successfully!")
-    return redirect(request.referrer)
+    return redirect(url_for('index_views.home_page'))
 
 @recipe_views.route('/recipes/<int:recipe_id>', methods=['GET'])
 @jwt_required()
