@@ -49,7 +49,7 @@ def update_recipe_action(recipe_id):
         for name, quantity in form_ingredients:
             ingredient = create_ingredient(name)
             add_recipe_ingredient(recipe_id, ingredient.id, quantity)
-        if update_recipe(recipe_id, data['name'], recipe.description, recipe.steps):
+        if update_recipe(recipe_id, data['name'], recipe.description, recipe.steps, data['category']):
             flash("Updated recipe successfully!")
         else:
             flash("Could not update recipe!", "error")
