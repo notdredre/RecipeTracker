@@ -99,6 +99,13 @@
             </div>
             {% endif %}
 
+            {% if recipe.missing_ingredients %}
+            <p>Missing Ingredients:</p>
+            {% for ingredient, quantity in recipe.missing_ingredients %}
+            <p>{{ingredient.name}} {{quantity}}</p>
+            {% endfor %}
+            {% endif %}
+
             <div class="recipe-actions">
                 <form method="GET" style="display: inline;">
                     <button type="button" onclick="showEditModal('{{ recipe.id }}')" class="edit-btn" style="display: inline;">Edit</button>
