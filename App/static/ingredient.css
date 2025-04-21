@@ -59,10 +59,25 @@
 }
 
 .nav-bar {
-    margin-left: auto; /* pushes nav-bar to the right */
+    margin-left: auto; 
 }
 
 .nav-bar nav {
     display: flex;
     gap: 1rem;
 }
+
+.nav-bar nav a {
+    padding: 0.5rem 1rem;
+    background-color: #ff7043;  
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.nav-bar nav a:hover {
+    background-color: darkorange;  
+}
+
