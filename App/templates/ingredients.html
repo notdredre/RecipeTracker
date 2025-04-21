@@ -20,14 +20,16 @@
         <div class="search-add-container">
             <form action="/" method="GET" class="search-form">
                 <input type="text" name="search" placeholder="Search..." class="search-input">
-                <button type="submit" class="search-button">Search</button>
-            </form>
-            <form action="{{ url_for('ingredient.add_ingredient') }}" method="POST" class="add-form">
-                <input type="text" name="name" placeholder="Add new ingredient..." class="add-input">
-                <input type="number" name="quantity" placeholder="Enter quantity" class="add-input">
-                <button type="submit" class="add-button">ADD</button>
+                <button type="submit" class="search-button">SEARCH</button>
             </form>
         </div>
+        <div class="search-add-container">
+        <form action="{{ url_for('ingredient.add_ingredient') }}" method="POST" class="add-form">
+            <input type="text" name="name" placeholder="Add new ingredient..." class="add-input">
+            <input type="number" name="quantity" placeholder="Enter quantity" class="add-input">
+            <button type="submit" class="add-button">ADD</button>
+        </form>
+    </div>
     </header>
 
     <!-- Ingredients List -->
