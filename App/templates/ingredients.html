@@ -4,26 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Ingredients</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='ingredient.css') }}">
-    
+    <title>My Recipes</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='app_base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='app_layout.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='app_forms.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='app_modals.css') }}">
 </head>
 
 <body>
-    <!-- Header with Logo -->
+    <!-- Header -->
     <header>
-        <div class="logo-container">
-            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
-            <h1>My Ingredients</h1>
-            <div class="nav-bar">
-            <nav>
-                <a href="/home">Home</a>
+        <div class="logo-group">
+            <img src="/static/logo.png" alt="Logo" class="logo">
+            <h1>My Cookbook</h1>
+        </div>
+        
+        <div class="nav-center">
+            <nav class="nav-links">
+                <a href="/home">Return to Recipes</a>
                 <a href="/logout">Logout</a>
             </nav>
         </div>
-    </div>
         
+        <div class="search-container">
+            <form method="GET" action="/home">
+                <input type="text" name="search" placeholder="Search recipes...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </header>
+
         
     </div>
         <!-- Search and Add Section -->
