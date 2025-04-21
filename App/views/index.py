@@ -2,16 +2,17 @@ from flask import Blueprint, redirect, render_template, jsonify, url_for, reques
 from App.controllers import initialize
 from App.controllers.recipe import get_user_recipes, search_user_recipes
 from App.controllers.ingredient import get_recipe_ingredients
-from flask_jwt_extended import jwt_required, current_user as jwt_current_user
+from flask_jwt_extended import jwt_required, get_jwt, current_user as jwt_current_user
+from datetime import datetime, timezone
 
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 
 @index_views.route('/', methods=['GET'])
 @jwt_required(optional=True)
 def index_page():
-    if jwt_current_user:
+    if jwt_current_user and get_jwt()['exp'] > datetime.timestamp(datetime.now(timezone.utc)):
         return redirect(url_for('index_views.home_page'))
-    return render_template('login.html')
+    return redirect(url_for('auth_views.login_page'))
 
 @index_views.route('/init', methods=['GET'])
 def init():
