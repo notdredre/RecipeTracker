@@ -1,5 +1,4 @@
 /* ===== HEADER & NAVIGATION ===== */
-/* ===== HEADER & NAVIGATION ===== */
 header {
     background-color: var(--primary);
     padding: 1.5rem 2rem;
@@ -102,64 +101,65 @@ nav {
     width: 100%;
 }
 
-/* ===== SEARCH CONTAINER ===== */
+/* Search Container */
 .search-container {
-    padding: 1.25rem 2rem 1.75rem;
+    padding: 1rem 2rem;
     background-color: var(--primary);
-    border-bottom: 1px solid rgba(0,0,0,0.08);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 .search-wrapper {
+    position: relative;
     max-width: 650px;
     margin: 0 auto;
-    position: relative;
 }
 
-.search-container input[type="search"] {
+.search-input {
     width: 100%;
-    padding: 0.85rem 1.5rem;
-    padding-right: 3.5rem;
+    padding: 0.85rem 5rem 0.85rem 1.5rem;
     border: none;
     border-radius: 50px;
-    font-size: 1.05rem;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-    background-color: white;
-    color: var(--text-dark);
+    font-size: 1rem;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
 
-.search-container input[type="search"]:focus {
-    outline: none;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.12);
-    transform: translateY(-1px);
-}
-
-.search-container button[type="submit"] {
+/* Search Submit Button */
+.search-submit {
     position: absolute;
-    right: 1rem;
+    right: -5.75rem;
     top: 50%;
     transform: translateY(-50%);
     background: none;
     border: none;
     cursor: pointer;
     color: var(--accent);
-    font-size: 1.3rem;
-    transition: transform 0.2s ease;
+    font-size: 1.2rem;
+    padding: 0.5rem;
 }
 
-.search-container button[type="submit"]:hover {
-    transform: translateY(-50%) scale(1.1);
+/* Clear Button */
+.search-clear {
+    position: absolute;
+    right: -3.5rem; /* Positions left of search button */
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #999;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    text-decoration: none;
+    display: block; /* Ensure it's always visible */
+}
+
+.search-clear:hover {
     color: var(--accent-dark);
 }
 
-.search-container button[type="submit"]:active {
-    transform: translateY(-50%) scale(0.95);
-}
-
-/* Optional: Magnifying glass icon */
-.search-container button[type="submit"]::after {
-    content: "🔍"; /* Or use font-awesome icon */
-    display: inline-block;
+.search-input:focus {
+    outline: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
 
 /* Responsive adjustments */
@@ -167,13 +167,19 @@ nav {
     .search-container {
         padding: 1rem 1.5rem;
     }
-    .search-container input[type="search"] {
-        padding: 0.75rem 1.25rem;
-        padding-right: 3rem;
+    .search-container input[type="text"] {
+        padding: 0.75rem 3.5rem 0.75rem 1.25rem;
         font-size: 1rem;
     }
+    .search-container button[type="submit"] {
+        right: 3rem;
+        font-size: 1.2rem;
+    }
+    .search-clear {
+        right: 0.75rem;
+        font-size: 1.2rem;
+    }
 }
-
 /* ===== RECIPE GRID ===== */
 .recipe-grid {
     display: grid;
