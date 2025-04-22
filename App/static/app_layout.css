@@ -372,3 +372,207 @@ nav {
     opacity: 0.6;
     transform: none;
 }
+
+/* ===== INGREDIENTS PAGE - SCOPED STYLES ===== */
+/* app_ingredients.css - Scoped specifically for ingredients page */
+
+/* Main container */
+.ingredients-page {
+    max-width: 100%;
+}
+
+/* Search Section - Ingredients Specific */
+.ingredients-page .search-container {
+    padding: 1rem 2rem;
+    margin-bottom: 2rem;
+    background-color: var(--primary);
+}
+
+.ingredients-page .search-wrapper {
+    position: relative;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.ingredients-page .search-input {
+    width: 100%;
+    padding: 0.85rem 3.5rem 0.85rem 1.5rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.ingredients-page .search-submit {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--accent);
+    font-size: 1.2rem;
+}
+
+.ingredients-page .search-clear {
+    position: absolute;
+    right: 3.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+/* Add Ingredient Form */
+.ingredients-page .add-container {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 2rem;
+}
+
+.ingredients-page .add-form {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.ingredients-page .form-row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.ingredients-page .add-input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.ingredients-page .add-button {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+/* Ingredients Table */
+.ingredients-page .ingredients-container {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.ingredients-page .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.ingredients-page .table-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.ingredients-page .total-count {
+    font-size: 0.9rem;
+    color: #666;
+    background: #f5f5f5;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+}
+
+.ingredients-page .ingredients-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ingredients-page .ingredients-table th {
+    padding: 1rem;
+    background: #f9f9f9;
+    font-weight: 500;
+    text-align: left;
+    border-bottom: 2px solid #eee;
+}
+
+.ingredients-page .ingredients-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+.ingredients-page .ingredient-name {
+    font-weight: 500;
+}
+
+.ingredients-page .ingredient-quantity {
+    color: #555;
+    font-weight: 500;
+}
+
+.ingredients-page .delete-button {
+    padding: 0.5rem 1rem;
+    background: #f5f5f5;
+    color: #e53935;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.ingredients-page .delete-button:hover {
+    background: #e53935;
+    color: white;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .ingredients-page {
+        padding: 0 1rem;
+    }
+    
+    .ingredients-page .form-row {
+        flex-direction: column;
+    }
+    
+    .ingredients-page .add-input,
+    .ingredients-page .add-button {
+        width: 100%;
+    }
+    
+    .ingredients-page .ingredients-table {
+        display: block;
+    }
+    
+    .ingredients-page .ingredients-table thead {
+        display: none;
+    }
+    
+    .ingredients-page .ingredients-table tbody tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid #eee;
+        border-radius: 8px;
+    }
+    
+    .ingredients-page .ingredients-table td {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .ingredients-page .ingredients-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        margin-right: 1rem;
+    }
+}

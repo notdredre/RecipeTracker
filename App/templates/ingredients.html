@@ -4,63 +4,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Recipes</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap"
-        rel="stylesheet">
+    <title>My Ingredients</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='app_base.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='app_layout.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='app_forms.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='app_modals.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='app_ingredients.css') }}">
 </head>
 
-<body>
-    <!-- Header -->
-    <header>
-        <div class="logo-group">
-            <img src="/static/logo.png" alt="Logo" class="logo">
-            <h1>My Cookbook</h1>
-        </div>
-        
-        <div class="nav-center">
-            <nav class="nav-links">
-                <a href="/home">Return to Recipes</a>
-                <a href="/logout">Logout</a>
-            </nav>
-        </div>
-
-    </header>
-
-        
+<!-- Header -->
+<header >
+    <div class="logo-group">
+        <img src="/static/logo.png" alt="Logo" class="logo">
+        <h1>My Ingredients</h1>
     </div>
-        <!-- Search and Add Section -->
-        <div class="search-add-container">
-            <form action="/ingredients" method="GET" class="search-form">
-                <input type="text" name="search" placeholder="Search..." class="search-input">
-                <button type="submit" class="search-button">SEARCH</button>
+    
+    <div class="nav-center">
+        <nav class="nav-links">
+            <a href="/home">Return to Recipes</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </div>
+    
+</header>
+
+<body class="ingredients-page">
+    <!-- Main Content -->
+    <main class="ingredients-content">
+        <!-- Search Section -->
+        <section class="search-section">
+            <form class="ingredient-search-form" action="/ingredients" method="GET">
+                <div class="search-group">
+                    <input type="text" name="search" placeholder="Search ingredients..." 
+                           class="search-field" value="{{ request.args.get('search', '') }}">
+                    <button type="submit" class="search-button">
+                        <span class="search-icon">🔍</span>
+                    </button>
+                    {% if request.args.get('search') %}
+                    <a href="/ingredients" class="clear-search">✕</a>
+                    {% endif %}
+                </div>
             </form>
-        </div>
-        <div class="search-add-container">
-        <form action="{{ url_for('ingredient.add_ingredient') }}" method="POST" class="add-form">
-            <input type="text" name="name" placeholder="Add new ingredient..." class="add-input">
-            <input type="number" name="quantity" placeholder="Enter quantity" class="add-input">
-            <button type="submit" class="add-button">ADD</button>
-        </form>
-    </div>
-    </header>
+        </section>
 
-    <!-- Ingredients List -->
-    <main>
-        <div class="ingredients-list">
-            {% for ingredient, inventory in ingredients %}
-            <div class="ingredient-item">
-                <span>{{ ingredient.name }}</span>
-                <span>{{ inventory.quantity }}</span>
-                <a href="{{ url_for('ingredient.delete_ingredient', ingredient_id=ingredient.id) }}" class="delete-button">DELETE</a>
+        <!-- Add Ingredient Section -->
+        <section class="add-ingredient-section">
+            <form action="{{ url_for('ingredient.add_ingredient') }}" method="POST" class="ingredient-form">
+                <div class="form-grid">
+                    <input type="text" name="name" placeholder="New ingredient name" class="form-input" required>
+                    <input type="number" name="quantity" step="0.01" min="0" placeholder="Quantity (kg)" class="form-input" required>
+                    <button type="submit" class="submit-button">Add</button>
+                </div>
+            </form>
+        </section>
+    
+        <!-- Ingredients List Section -->
+        <section class="ingredients-list-section">
+            <div class="section-header">
+                <h2 class="section-title">My Ingredients</h2>
+                <span class="items-count">{{ ingredients|length }} Ingredients</span>
             </div>
-            {% endfor %}
-        </div>
+            
+            <div class="table-container">
+                <table class="ingredients-table">
+                    <thead>
+                        <tr>
+                            <th class="column-name">Ingredient</th>
+                            <th class="column-quantity">Quantity</th>
+                            <th class="column-actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ingredient, inventory in ingredients %}
+                        <tr class="ingredient-row">
+                            <td class="ingredient-name">{{ ingredient.name }}</td>
+                            <td class="ingredient-amount">{{ "%.2f"|format(inventory.quantity) }} kg</td>
+                            <td class="ingredient-actions">
+                                <a href="{{ url_for('ingredient.delete_ingredient', ingredient_id=ingredient.id) }}" 
+                                   class="action-button delete"
+                                   onclick="return confirm('Delete {{ ingredient.name }}?')">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </main>
 </body>
-
 </html>

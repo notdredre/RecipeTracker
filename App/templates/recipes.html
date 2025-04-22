@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
+    <!-- Regretably does not work, next time sigh-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+        document.addEventListener('DOMContentLoaded', function() {
+            let timerInterval;
+            Swal.fire({
+                title: "{{ message }}",
+            });
+        });
+    </script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +18,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='app_base.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='app_layout.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='app_recipes.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='app_forms.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='app_modals.css') }}">
 </head>
