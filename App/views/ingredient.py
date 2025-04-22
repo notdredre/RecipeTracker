@@ -39,7 +39,7 @@ def add_ingredient():
     ingredient = get_ingredient_by_name(name)
     if ingredient:
         if get_user_ingredient(user_id, ingredient.id):
-            return redirect(url_for("ingredient.update_ingredient", ingredient_id=ingredient.id))
+            return update_ingredient(ingredient.id)
         add_user_ingredient(user_id, ingredient.id, quantity)
     else:
         new_ingredient = create_ingredient(name)
@@ -64,7 +64,7 @@ def get_ingredient(ingredient_id):
 @jwt_required()
 def update_ingredient(ingredient_id):
     user_id = get_jwt_identity()
-    data = request.get_json()
+    data = request.form
     name = data.get("name")
     quantity = data.get("quantity")
     if not quantity:
@@ -72,7 +72,7 @@ def update_ingredient(ingredient_id):
     updated = update_user_ingredient(user_id, ingredient_id, name, quantity)
     if not updated:
         return jsonify({"error": "Ingredient not found"}), 404
-    return jsonify({"message": "Ingredient updated successfully"})
+    return redirect(url_for('ingredient.get_ingredients'))
 
 
 @ingredient_bp.route("delete/<int:ingredient_id>", methods=["GET"])
